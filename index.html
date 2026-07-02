@@ -34,43 +34,6 @@
             overflow: hidden;
         }
 
-        /* Dual Logo Header di Background Login */
-        .login-header-logos {
-            position: absolute;
-            top: 25px;
-            left: 0;
-            right: 0;
-            padding: 0 4%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            pointer-events: none;
-        }
-
-        /* Kotak logo yang menyatu dengan warna background */
-        .logo-placeholder {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px 16px;
-            border-radius: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .logo-left {
-            color: #d61c22;
-            border-left: 4px solid #d61c22;
-        }
-
-        .logo-right {
-            color: #0d2040;
-            border-right: 4px solid #0d2040;
-        }
-
         .login-card {
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(8px);
@@ -335,14 +298,6 @@
             .nav-links a.active {
                 background-color: #d61c22;
             }
-            .login-header-logos {
-                position: relative;
-                top: 0;
-                padding: 10px 0;
-                margin-bottom: 20px;
-                justify-content: center;
-                gap: 20px;
-            }
             .login-wrapper {
                 flex-direction: column;
                 justify-content: center;
@@ -459,23 +414,10 @@
 </head>
 <body>
 
-    <!-- 1. HALAMAN LOGIN PREMIUM DENGAN DUAL LOGO & GRADASI POLOS -->
+    <!-- 1. HALAMAN LOGIN PREMIUM DENGAN GRADASI POLOS -->
     <div id="login-page" class="login-wrapper">
-        
-        <!-- Header Identitas Logo Kiri & Kanan -->
-        <div class="login-header-logos">
-            <!-- Referensi ke berkas PPA Asli.png di kiri atas -->
-            <div class="logo-placeholder logo-left">
-                🔴 PPA (PPA Asli.png)
-            </div>
-            <!-- Referensi ke berkas LOGO PPD NEW HIRES.jpg di kanan atas -->
-            <div class="logo-placeholder logo-right">
-                🔵 PPD (LOGO PPD NEW HIRES.jpg)
-            </div>
-        </div>
-
         <div class="login-card">
-            <h2>PPD Portal</h2>
+            <h2>PPD Web Portal</h2>
             <p>Plant People Development - PPA Site ADW</p>
             <div id="login-form-container">
                 <div class="form-group">
@@ -483,7 +425,7 @@
                     <input type="text" id="username" placeholder="Masukkan ID atau username">
                 </div>
                 <div class="form-group">
-                    <label pour="password">Password</label>
+                    <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Masukkan sandi keamanan">
                 </div>
                 <button type="button" class="btn-login" onclick="handleLogin()">Masuk Portal</button>
@@ -752,7 +694,7 @@
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
 
             const sekarang = new Date();
-            const hariSekarang = Thermal = sekarang.getDay();
+            const hariSekarang = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
