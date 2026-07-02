@@ -642,4 +642,281 @@
                                 <th>Breakdown</th>
                                 <th>Komponen</th>
                                 <th>Gejala</th>
-                                <th>
+                                <th>Analisa Kerusakan</th>
+                                <th>Perbaikan</th>
+                                <th>Pencegahan</th>
+                                <th>Foto Lampiran</th>
+                                <th>Status</th>
+                                <th>Pengawas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="11" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data yang masuk.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-mentoring" class="content-section"><h2>Mentoring Portal</h2><p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p><p style="color:#7f8c8d;">Halaman pendaftaran mentoring sedang dipersiapkan oleh administrator.</p></div>
+            <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas.</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
+            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud aplikasi.</p></div>
+
+        </div>
+    </div>
+
+    <script>
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
+        let globalNrp = "";
+
+        function handleLogin() {
+            const userInp = document.getElementById('username').value;
+            const passInp = document.getElementById('password').value;
+
+            if(!userInp || !passInp) {
+                alert("Username dan Password wajib diisi lengkap!");
+                return;
+            }
+
+            const btnLogin = document.querySelector('.btn-login');
+            btnLogin.innerText = "Memverifikasi Otoritas Portal...";
+            btnLogin.disabled = true;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "login", username: userInp, password: passInp })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    globalNrp = data.nrp;
+                    document.getElementById('user-display-name').innerText = data.nama;
+                    
+                    document.getElementById('act-nama').value = data.nama;
+                    document.getElementById('act-nrp').value = data.nrp;
+                    
+                    document.getElementById('ta-nama').value = data.nama;
+                    document.getElementById('ta-nrp').value = data.nrp;
+
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('main-application').style.display = 'block';
+
+                    loadActivityHistory(data.nrp);
+                    loadTAHistory(data.nrp);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error Login:", error);
+                alert("Gagal menghubungi server basis data.");
+            })
+            .finally(() => {
+                btnLogin.innerText = "Masuk Portal";
+                btnLogin.disabled = false;
+            });
+        }
+
+        function loadActivityHistory(nrpUser) {
+            const tableBody = document.querySelector('#activity-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
+
+            const sekarang = new Date();
+            const hariSekarang = sekarang.getDay();
+            const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
+            const seninPekanIni = new Date(sekarang);
+            seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
+            seninPekanIni.setHours(0, 0, 0, 0);
+
+            const mingguPekanIni = new Date(seninPekanIni);
+            mingguPekanIni.setDate(seninPekanIni.getDate() + 6);
+            mingguPekanIni.setHours(23, 59, 59, 999);
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    let adaDataPekanIni = false;
+                    data.history.forEach(item => {
+                        const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
+                        let tanggalAktivitas = item.tanggal.includes('-') ? 
+                            new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
+
+                        if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
+                            adaDataPekanIni = true;
+                            const row = document.createElement('tr');
+                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td><span style="color:#d61c22; font-weight:600;">${item.unit}</span></td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                            tableBody.appendChild(row);
+                        }
+                    });
+                    if (!adaDataPekanIni) tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Tidak ditemukan rekam aktivitas kerja untuk pekan ini.</td></tr>`;
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas terdaftar.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ea2027; padding: 25px;">Koneksi terputus saat memuat lembar DAR.</td></tr>`;
+            });
+        }
+
+        function saveActivity(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengamankan Data..."; btnSubmit.disabled = true;
+
+            const formData = {
+                action: "activity",
+                nama: document.getElementById('act-nama').value,
+                nrp: document.getElementById('act-nrp').value,
+                tanggal: document.getElementById('act-tanggal').value,
+                waktuMulai: document.getElementById('act-waktu-mulai').value,
+                waktuSelesai: document.getElementById('act-waktu-selesai').value,
+                unit: document.getElementById('act-unit').value,
+                activity: document.getElementById('act-activity').value,
+                durasi: document.getElementById('act-durasi').value + " Menit",
+                keterangan: document.getElementById('act-keterangan').value || "-"
+            };
+
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Aktivitas harian masuk spreadsheet cloud!");
+                    loadActivityHistory(formData.nrp);
+                    event.target.reset();
+                    document.getElementById('act-nama').value = formData.nama;
+                    document.getElementById('act-nrp').value = formData.nrp;
+                } else { alert("Eror Sistem: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengamankan data akibat gangguan jaringan."))
+            .finally(() => { btnSubmit.innerText = "Simpan Aktivitas"; btnSubmit.disabled = false; });
+        }
+
+        function loadTAHistory(nrpUser) {
+            const tableBody = document.querySelector('#ta-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komponen...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTAHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let statusClass = "badge-open";
+                        if(item.status === "On Progress") statusClass = "badge-progress";
+                        if(item.status === "Closed") statusClass = "badge-closed";
+
+                        let linkHtml = "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        if(item.linkLampiran && item.linkLampiran !== "-") {
+                            linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; text-decoration:none; font-weight:600; display:inline-block; border-bottom:1px dashed #0d2040;">Lihat Foto 🔗</a>`;
+                        }
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.tanggal}</td>
+                            <td><strong>${item.unit}</strong></td>
+                            <td>${item.jenisBreakdown}</td>
+                            <td>${item.komponen}</td>
+                            <td>${item.symptom}</td>
+                            <td>${item.rootCause}</td>
+                            <td>${item.perbaikan}</td>
+                            <td>${item.pencegahan}</td>
+                            <td>${linkHtml}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td>
+                            <td><em>${item.namaPengawas}</em></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis tersimpan.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi data tabel papan pantau.</td></tr>`;
+            });
+        }
+
+        function saveTechnicalAnalysis(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengompres & Mengunggah..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('ta-file');
+            const file = fileInput.files[0];
+
+            const taData = {
+                action: "saveTA",
+                nama: document.getElementById('ta-nama').value,
+                nrp: document.getElementById('ta-nrp').value,
+                tanggal: document.getElementById('ta-tanggal').value,
+                unit: document.getElementById('ta-unit').value,
+                jenisBreakdown: document.getElementById('ta-jenis-breakdown').value,
+                komponen: document.getElementById('ta-komponen').value,
+                status: document.getElementById('ta-status').value,
+                symptom: document.getElementById('ta-symptom').value,
+                rootCause: document.getElementById('ta-rootcause').value,
+                perbaikan: document.getElementById('ta-perbaikan').value,
+                pencegahan: document.getElementById('ta-pencegahan').value,
+                namaPengawas: document.getElementById('ta-pengawas').value,
+                fileData: "",
+                fileName: "",
+                fileType: ""
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    taData.fileData = e.target.result;
+                    taData.fileName = `${taData.unit}_${Date.now()}_${file.name}`;
+                    taData.fileType = file.type;
+                    kirimDataTA(taData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTA(taData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataTA(taData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(taData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Dokumen analisis & lampiran foto terunggah total!");
+                    loadTAHistory(taData.nrp);
+                    formElement.reset();
+                    document.getElementById('ta-nama').value = taData.nama;
+                    document.getElementById('ta-nrp').value = taData.nrp;
+                } else { alert("Gagal Simpan Laporan: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengunggah lampiran foto akibat limitasi timeout koneksi luar."))
+            .finally(() => { btnSubmit.innerText = "Simpan Laporan Teknis"; btnSubmit.disabled = false; });
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            document.getElementById('main-application').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function switchSection(sectionId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('sec-' + sectionId).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
