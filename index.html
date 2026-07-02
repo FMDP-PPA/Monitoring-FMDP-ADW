@@ -356,7 +356,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="9" style="text-align: center; color: #999;" id="status-tabel">Memuat riwayat aktivitas...</td>
+                                <td colspan="9" style="text-align: center; color: #999;" id="status-tabel">Belum ada riwayat aktivitas yang dimuat.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -372,6 +372,7 @@
     </div>
 
     <script>
+        // URL Google Apps Script Terbarumu
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
 
         function handleLogin() {
@@ -393,6 +394,7 @@
                 password: passInp
             };
 
+            // Mengirim data menggunakan format text/plain agar bebas dari hambatan CORS di GitHub Pages
             fetch(scriptUrl, {
                 method: "POST",
                 body: JSON.stringify(loginData)
@@ -407,15 +409,14 @@
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('main-application').style.display = 'block';
 
-                    // PANGGIL FUNGSI LOAD RIWAYAT SETELAH BERHASIL LOGIN
                     loadActivityHistory(data.nrp);
                 } else {
                     alert(data.message);
                 }
             })
             .catch(error => {
-                console.error("Error:", error);
-                alert("Gagal terhubung ke basis data.");
+                console.error("Error Login:", error);
+                alert("Gagal terhubung ke basis data. Silakan pastikan deploy Apps Script Anda sudah di-set ke 'Anyone'.");
             })
             .finally(() => {
                 btnLogin.innerText = "Masuk Aplikasi";
@@ -423,10 +424,9 @@
             });
         }
 
-        // FUNGSI UNTUK MENARIK DATA RIWAYAT DARI SPREADSHEET BERDASARKAN NRP
         function loadActivityHistory(nrpUser) {
             const tableBody = document.querySelector('#activity-table tbody');
-            document.getElementById('status-tabel').innerText = "Memuat riwayat aktivitas...";
+            tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Memuat riwayat aktivitas...</td></tr>`;
 
             fetch(scriptUrl, {
                 method: "POST",
@@ -434,7 +434,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                tableBody.innerHTML = ""; // Bersihkan tabel terlebih dahulu
+                tableBody.innerHTML = "";
                 
                 if (data.result === "success" && data.history.length > 0) {
                     data.history.forEach(item => {
@@ -462,32 +462,6 @@
             });
         }
 
-        function handleLogout(event) {
-            event.preventDefault();
-            document.getElementById('main-application').style.display = 'none';
-            document.getElementById('login-page').style.display = 'flex';
-            
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            
-            document.getElementById('user-display-name').innerText = 'User';
-            document.getElementById('act-nama').value = '';
-            document.getElementById('act-nrp').value = '';
-            document.querySelector('#activity-table tbody').innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Belum ada data yang disimpan.</td></tr>`;
-        }
-
-        function switchSection(sectionId, element) {
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            const links = document.querySelectorAll('.nav-links a');
-            links.forEach(link => link.classList.remove('active'));
-
-            document.getElementById('sec-' + sectionId).classList.add('active');
-            element.classList.add('active');
-        }
-
-        // Menyimpan Aktivitas Harian Baru
         function saveActivity(event) {
             event.preventDefault();
 
@@ -518,10 +492,8 @@
                 if(data.result === "success") {
                     alert("Data berhasil tersimpan langsung ke Google Sheets!");
                     
-                    // Segarkan kembali isi tabel agar data baru masuk ke riwayat paling atas
                     loadActivityHistory(formData.nrp);
                     
-                    // Reset form isian saja
                     document.getElementById('act-tanggal').value = '';
                     document.getElementById('act-waktu-mulai').value = '';
                     document.getElementById('act-waktu-selesai').value = '';
@@ -534,7 +506,7 @@
                 }
             })
             .catch(error => {
-                console.error("Error:", error);
+                console.error("Error Save Activity:", error);
                 alert("Terjadi kesalahan koneksi saat mengirim data.");
             })
             .finally(() => {
@@ -542,7 +514,31 @@
                 btnSubmit.disabled = false;
             });
         }
-    </script>
 
+        function handleLogout(event) {
+            event.preventDefault();
+            document.getElementById('main-application').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            document.getElementById('user-display-name').innerText = 'User';
+            document.getElementById('act-nama').value = '';
+            document.getElementById('act-nrp').value = '';
+            document.querySelector('#activity-table tbody').innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Belum ada riwayat aktivitas yang dimuat.</td></tr>`;
+        }
+
+        function switchSection(sectionId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('sec-' + sectionId).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
