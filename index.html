@@ -29,6 +29,7 @@
             flex: 1;
             padding: 20px;
             position: relative;
+            /* Latar belakang gradasi polos warna korporat PPA yang clean, aman, & stabil */
             background: linear-gradient(135deg, #0d2040 0%, #d61c22 100%);
             overflow: hidden;
         }
@@ -143,9 +144,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 4%;
-            height: 80px;
+            height: 80px; /* Sedikit dinaikkan untuk mengakomodasi logo & 2 baris teks */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
+        /* Kontainer Identitas Kiri (Logo + Teks Dua Baris) */
         .brand-container {
             display: flex;
             align-items: center;
@@ -177,7 +180,7 @@
         }
 
         .brand-subtitle {
-            color: #ffeaa7;
+            color: #ffeaa7; /* Warna aksen kuning soft/emas khas informasi */
             font-size: 11.5px;
             font-weight: 500;
             letter-spacing: 0.5px;
@@ -270,6 +273,7 @@
             margin-bottom: 25px;
         }
 
+        /* CARD BERANDA */
         .welcome-box {
             background: linear-gradient(to right, #ffffff, #fdfdfd);
             border-left: 5px solid #d61c22;
@@ -288,6 +292,7 @@
             color: #d61c22;
         }
 
+        /* GRID SYSTEM FORM */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -301,6 +306,7 @@
             gap: 12px;
         }
 
+        /* RESPONSIVE DESIGN BREAKPOINTS */
         @media (max-width: 992px) {
             .navbar {
                 flex-direction: column;
@@ -419,6 +425,7 @@
             background-color: #f1f2f6;
         }
 
+        /* Badge Status */
         .badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -432,34 +439,18 @@
         .badge-open { background-color: #ffeaa7; color: #d63031; }
         .badge-progress { background-color: #dff9fb; color: #0984e3; }
         .badge-closed { background-color: #e2f7ce; color: #27ae60; }
-        
-        .img-preview {
-            max-width: 60px;
-            max-height: 40px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .grid-full {
-            grid-column: span 2;
-        }
-        @media (max-width: 768px) {
-            .grid-full {
-                grid-column: span 1;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- HALAMAN LOGIN -->
     <div id="login-page" class="login-wrapper">
         <div class="login-card">
             <h2>PPD Web Portal</h2>
             <p>Plant People Development - PPA Site ADW</p>
             <div id="login-form-container">
                 <div class="form-group">
-                    <label for="username">Username / ID</label>
-                    <input type="text" id="username" placeholder="Masukkan ID (contoh: PPA123)">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan ID atau username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -470,11 +461,10 @@
         </div>
     </div>
 
-    <!-- APLIKASI UTAMA -->
     <div id="main-application">
         <nav class="navbar">
             <div class="brand-container">
-                <img class="brand-logo" alt="Logo PPD" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAbklEQVRoQ+3XwQkAMAwEwSdj/93YgskFGPidC7g7Z9bZ98w8mREtshwZ6YgWIsORkY5oITIcGemIFiLDkZGOaCEyHBnpiBYiw5GRjmgheh0Z6YgWIsORkY5oITIcGemIFiLDkZGOaCEyHBnpiBYiX7w6gAEBo99XAAAAAElFTkSuQmCC" />
+                <img class="brand-logo" alt="Logo PPD" src="data:image/jpeg;base64,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" />
                 <div class="brand-text">
                     <span class="brand-title">Plant People Development</span>
                     <span class="brand-subtitle">PPA Site ADW</span>
@@ -494,7 +484,6 @@
 
         <div class="container">
             
-            <!-- SECTION BERANDA -->
             <div id="sec-beranda" class="content-section active">
                 <div class="welcome-box">
                     <h1>Selamat Datang, <span id="user-display-name">User</span>!</h1>
@@ -502,7 +491,6 @@
                 </div>
             </div>
 
-            <!-- SECTION DAILY ACTIVITY -->
             <div id="sec-daily-activity" class="content-section">
                 <h2>Form Daily Activity (DAR)</h2>
                 <p class="section-desc">Pencatatan rekam aktivitas kerja personil harian secara akurat.</p>
@@ -567,7 +555,6 @@
                 </div>
             </div>
 
-            <!-- SECTION TECHNICAL ANALYSIS -->
             <div id="sec-technical-analysis" class="content-section">
                 <h2>Form Technical Analysis (TA)</h2>
                 <p class="section-desc">Pencatatan laporan analisis kerusakan komponen dan riwayat perbaikan unit.</p>
@@ -615,287 +602,320 @@
                             <label>Lampirkan Foto Kondisi</label>
                             <input type="file" id="ta-file" accept="image/*" required style="padding: 8px;">
                         </div>
-                        <div class="form-group grid-full">
+                        <div class="form-group" style="grid-column: span 2;">
                             <label>Nama Pengawas Lapangan</label>
-                            <input type="text" id="ta-pengawas" placeholder="Masukkan nama pengawas penanggung jawab" required>
+                            <input type="text" id="ta-pengawas" placeholder="Masukkan nama penanggung jawab / pengawas" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn-submit">Simpan Analisis</button>
+
+                    <div class="form-group">
+                        <label>Gejala Fisik / Masalah Awal (Symptom)</label>
+                        <textarea id="ta-symptom" rows="2" placeholder="Tuliskan keluhan operator atau indikasi kerusakan luar..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Analisa Akar Masalah (Root Cause Analysis)</label>
+                        <textarea id="ta-rootcause" rows="2" placeholder="Hasil investigasi kerusakan teknis mendalam penyebab kegagalan..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tindakan Korektif (Perbaikan)</label>
+                        <textarea id="ta-perbaikan" rows="2" placeholder="Langkah penanganan mekanik yang sudah dieksekusi..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rekomendasi / Langkah Pencegahan</label>
+                        <textarea id="ta-pencegahan" rows="2" placeholder="Langkah mitigasi ke depan agar kendala serupa tidak terulang kembali..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="background-color: #0d2040; box-shadow: 0 3px 6px rgba(13, 32, 64, 0.2);">Simpan Laporan Teknis</button>
                 </form>
 
                 <div class="table-responsive">
-                    <h3>Daftar Riwayat Technical Analysis</h3>
+                    <h3>Papan Monitoring Hasil Analisis Teknik</h3>
+                    <p class="table-info-text">Pemantauan seluruh dokumen rekayasa analisis kerusakan unit</p>
                     <table id="ta-table">
                         <thead>
                             <tr>
-                                <th>Analyst</th><th>Tanggal</th><th>Unit</th><th>Breakdown</th><th>Komponen</th><th>Status</th><th>Foto</th><th>Pengawas</th>
+                                <th>Tanggal</th>
+                                <th>Unit CN</th>
+                                <th>Breakdown</th>
+                                <th>Komponen</th>
+                                <th>Gejala</th>
+                                <th>Analisa Kerusakan</th>
+                                <th>Perbaikan</th>
+                                <th>Pencegahan</th>
+                                <th>Foto Lampiran</th>
+                                <th>Status</th>
+                                <th>Pengawas</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="8" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada data analisis kerusakan.</td></tr>
+                            <tr><td colspan="11" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data yang masuk.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- SECTION MENTORING -->
-            <div id="sec-mentoring" class="content-section">
-                <h2>Program Mentoring Lapangan</h2>
-                <p class="section-desc">Pencatatan bimbingan teknis karyawan site.</p>
-                <form onsubmit="saveMentoring(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Tanggal Mentoring</label>
-                            <input type="date" id="mentor-tanggal" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Nama Mentee / Siswa</label>
-                            <input type="text" id="mentor-mentee" placeholder="Nama karyawan yang dibimbing" required>
-                        </div>
-                        <div class="form-group grid-full">
-                            <label>Materi / Topik Bimbingan</label>
-                            <textarea id="mentor-materi" rows="3" placeholder="Sebutkan kompetensi atau problem-solving yang diajarkan..." required></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit">Simpan Data Mentoring</button>
-                </form>
-            </div>
-
-            <!-- SECTION TRAINING -->
-            <div id="sec-training" class="content-section">
-                <h2>Log Jadwal & Realisasi Training</h2>
-                <p class="section-desc">Modul pengelolaan kelas pelatihan internal Plant People Development.</p>
-                <div class="welcome-box" style="border-left-color: #0d2040;">
-                    <h3>Fitur Kelas Training Aktif</h3>
-                    <p style="margin-top: 5px; font-size: 14px; color: #57606f;">Data modul pelatihan tersinkronisasi otomatis dengan standar sertifikasi kompetensi perusahaan.</p>
-                </div>
-            </div>
-
-            <!-- SECTION MODUL -->
-            <div id="sec-modul" class="content-section">
-                <h2>Pusat Unduhan Modul & FMDP</h2>
-                <p class="section-desc">Kumpulan referensi teknis mekanik, materi pembelajaran, dan standarisasi parameter kompetensi.</p>
-                <div class="table-responsive" style="margin-top: 10px;">
-                    <table>
-                        <thead>
-                            <tr><th>Nama Dokumen</th><th>Kategori</th><th>Aksi</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Modul Basic Mechanic Course (BMC) - Engine System</td><td>Standard BMC</td><td><button class="btn-submit" style="padding: 6px 12px; font-size: 12px;" onclick="alert('Mengunduh Modul BMC...')">Download</button></td></tr>
-                            <tr><td>Panduan Lapangan Analisis Kerusakan Komatsu PC2000</td><td>Technical Analysis</td><td><button class="btn-submit" style="padding: 6px 12px; font-size: 12px;" onclick="alert('Mengunduh Panduan...')">Download</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div id="sec-mentoring" class="content-section"><h2>Mentoring Portal</h2><p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p><p style="color:#7f8c8d;">Halaman pendaftaran mentoring sedang dipersiapkan oleh administrator.</p></div>
+            <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas.</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
+            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud aplikasi.</p></div>
 
         </div>
     </div>
 
-    <!-- LOGIKA JAVASCRIPT APLIKASI -->
     <script>
-        // Simulasi Session UserAktif
-        let currentUser = null;
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
+        let globalNrp = "";
 
-        // 1. FUNGSI LOGIN SISTEM
         function handleLogin() {
-            const userIn = document.getElementById('username').value.trim();
-            const passIn = document.getElementById('password').value;
+            const userInp = document.getElementById('username').value;
+            const passInp = document.getElementById('password').value;
 
-            if (userIn === "" || passIn === "") {
-                alert("Mohon isi Username dan Password terlebih dahulu!");
+            if(!userInp || !passInp) {
+                alert("Username dan Password wajib diisi lengkap!");
                 return;
             }
 
-            // Set data user secara dinamis dari input username
-            currentUser = {
-                username: userIn,
-                nama: userIn.toUpperCase(), // Nama disamakan dengan username kapital
-                nrp: "NRP-" + Math.floor(100000 + Math.random() * 900000) // Generate NRP acak untuk simulasi data
-            };
+            const btnLogin = document.querySelector('.btn-login');
+            btnLogin.innerText = "Memverifikasi Otoritas Portal...";
+            btnLogin.disabled = true;
 
-            // Tampilkan info ke elemen UI
-            document.getElementById('user-display-name').innerText = currentUser.nama;
-            document.getElementById('act-nama').value = currentUser.nama;
-            document.getElementById('act-nrp').value = currentUser.nrp;
-            document.getElementById('ta-nama').value = currentUser.nama;
-            document.getElementById('ta-nrp').value = currentUser.nrp;
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "login", username: userInp, password: passInp })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    globalNrp = data.nrp;
+                    document.getElementById('user-display-name').innerText = data.nama;
+                    
+                    document.getElementById('act-nama').value = data.nama;
+                    document.getElementById('act-nrp').value = data.nrp;
+                    
+                    document.getElementById('ta-nama').value = data.nama;
+                    document.getElementById('ta-nrp').value = data.nrp;
 
-            // Transisi Tampilan Halaman
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('main-application').style.display = 'block';
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('main-application').style.display = 'block';
 
-            // Muat Data Riwayat dari LocalStorage jika ada
-            loadActivities();
-            loadTechnicalAnalysisData();
+                    loadActivityHistory(data.nrp);
+                    loadTAHistory(data.nrp);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error Login:", error);
+                alert("Gagal menghubungi server basis data.");
+            })
+            .finally(() => {
+                btnLogin.innerText = "Masuk Portal";
+                btnLogin.disabled = false;
+            });
         }
 
-        // 2. FUNGSI LOGOUT
-        function handleLogout(e) {
-            if(e) e.preventDefault();
-            if(confirm("Apakah Anda yakin ingin keluar dari portal?")) {
-                currentUser = null;
-                document.getElementById('username').value = "";
-                document.getElementById('password').value = "";
-                document.getElementById('main-application').style.display = 'none';
-                document.getElementById('login-page').style.display = 'flex';
-            }
+        function loadActivityHistory(nrpUser) {
+            const tableBody = document.querySelector('#activity-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
+
+            const sekarang = new Date();
+            const hariSekarang = sekarang.getDay();
+            const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
+            const seninPekanIni = new Date(sekarang);
+            seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
+            seninPekanIni.setHours(0, 0, 0, 0);
+
+            const mingguPekanIni = new Date(seninPekanIni);
+            mingguPekanIni.setDate(seninPekanIni.getDate() + 6);
+            mingguPekanIni.setHours(23, 59, 59, 999);
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    let adaDataPekanIni = false;
+                    data.history.forEach(item => {
+                        const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
+                        let tanggalAktivitas = item.tanggal.includes('-') ? 
+                            new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
+
+                        if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
+                            adaDataPekanIni = true;
+                            const row = document.createElement('tr');
+                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td><span style="color:#d61c22; font-weight:600;">${item.unit}</span></td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                            tableBody.appendChild(row);
+                        }
+                    });
+                    if (!adaDataPekanIni) tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Tidak ditemukan rekam aktivitas kerja untuk pekan ini.</td></tr>`;
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas terdaftar.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ea2027; padding: 25px;">Koneksi terputus saat memuat lembar DAR.</td></tr>`;
+            });
         }
 
-        // 3. NAVIGASI MENU (SWITCH SECTION)
-        function switchSection(sectionId, element) {
-            // Sembunyikan semua section
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            // Matikan semua status active pada navbar
-            const links = document.querySelectorAll('.nav-links a');
-            links.forEach(link => link.classList.remove('active'));
-
-            // Aktifkan section dan link terpilih
-            document.getElementById('sec-' + sectionId).classList.add('active');
-            element.classList.add('active');
-        }
-
-        // 4. LOGIKA FORM DAILY ACTIVITY (DAR)
         function saveActivity(event) {
             event.preventDefault();
-            
-            const activityData = {
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengamankan Data..."; btnSubmit.disabled = true;
+
+            const formData = {
+                action: "activity",
                 nama: document.getElementById('act-nama').value,
                 nrp: document.getElementById('act-nrp').value,
                 tanggal: document.getElementById('act-tanggal').value,
-                mulai: document.getElementById('act-waktu-mulai').value,
-                selesai: document.getElementById('act-waktu-selesai').value,
+                waktuMulai: document.getElementById('act-waktu-mulai').value,
+                waktuSelesai: document.getElementById('act-waktu-selesai').value,
                 unit: document.getElementById('act-unit').value,
-                durasi: document.getElementById('act-durasi').value,
-                aktivitas: document.getElementById('act-activity').value,
+                activity: document.getElementById('act-activity').value,
+                durasi: document.getElementById('act-durasi').value + " Menit",
                 keterangan: document.getElementById('act-keterangan').value || "-"
             };
 
-            let listActivities = JSON.parse(localStorage.getItem('ppd_activities')) || [];
-            listActivities.push(activityData);
-            localStorage.setItem('ppd_activities', JSON.stringify(listActivities));
-
-            alert("Data Daily Activity berhasil disimpan ke local database!");
-            event.target.reset();
-            
-            // Re-assign nama dan nrp yang terhapus karena reset()
-            document.getElementById('act-nama').value = currentUser.nama;
-            document.getElementById('act-nrp').value = currentUser.nrp;
-
-            loadActivities();
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Aktivitas harian masuk spreadsheet cloud!");
+                    loadActivityHistory(formData.nrp);
+                    event.target.reset();
+                    document.getElementById('act-nama').value = formData.nama;
+                    document.getElementById('act-nrp').value = formData.nrp;
+                } else { alert("Eror Sistem: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengamankan data akibat gangguan jaringan."))
+            .finally(() => { btnSubmit.innerText = "Simpan Aktivitas"; btnSubmit.disabled = false; });
         }
 
-        function loadActivities() {
-            const tableBody = document.querySelector('#activity-table tbody');
-            let listActivities = JSON.parse(localStorage.getItem('ppd_activities')) || [];
+        function loadTAHistory(nrpUser) {
+            const tableBody = document.querySelector('#ta-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komponen...</td></tr>`;
 
-            if (listActivities.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat aktivitas yang dimuat.</td></tr>`;
-                return;
-            }
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTAHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let statusClass = "badge-open";
+                        if(item.status === "On Progress") statusClass = "badge-progress";
+                        if(item.status === "Closed") statusClass = "badge-closed";
 
-            tableBody.innerHTML = "";
-            listActivities.forEach(act => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${act.nama}</td>
-                    <td>${act.nrp}</td>
-                    <td>${act.tanggal}</td>
-                    <td>${act.mulai}</td>
-                    <td>${act.selesai}</td>
-                    <td>${act.unit}</td>
-                    <td>${act.aktivitas}</td>
-                    <td>${act.durasi} Menit</td>
-                    <td>${act.keterangan}</td>
-                `;
-                tableBody.appendChild(row);
+                        let linkHtml = "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        if(item.linkLampiran && item.linkLampiran !== "-") {
+                            linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; text-decoration:none; font-weight:600; display:inline-block; border-bottom:1px dashed #0d2040;">Lihat Foto 🔗</a>`;
+                        }
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.tanggal}</td>
+                            <td><strong>${item.unit}</strong></td>
+                            <td>${item.jenisBreakdown}</td>
+                            <td>${item.komponen}</td>
+                            <td>${item.symptom}</td>
+                            <td>${item.rootCause}</td>
+                            <td>${item.perbaikan}</td>
+                            <td>${item.pencegahan}</td>
+                            <td>${linkHtml}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td>
+                            <td><em>${item.namaPengawas}</em></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis tersimpan.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi data tabel papan pantau.</td></tr>`;
             });
         }
-
-        // 5. LOGIKA FORM TECHNICAL ANALYSIS (TA)
-        let base64ImageStr = "";
-        // Mendengarkan perubahan input file untuk mengubahnya menjadi base64 string
-        document.getElementById('ta-file').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    base64ImageStr = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
 
         function saveTechnicalAnalysis(event) {
             event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengompres & Mengunggah..."; btnSubmit.disabled = true;
 
-            const badgeClasses = {
-                "Open": "badge-open",
-                "On Progress": "badge-progress",
-                "Closed": "badge-closed"
-            };
-
-            const statusVal = document.getElementById('ta-status').value;
+            const fileInput = document.getElementById('ta-file');
+            const file = fileInput.files[0];
 
             const taData = {
-                analyst: document.getElementById('ta-nama').value,
+                action: "saveTA",
+                nama: document.getElementById('ta-nama').value,
                 nrp: document.getElementById('ta-nrp').value,
                 tanggal: document.getElementById('ta-tanggal').value,
                 unit: document.getElementById('ta-unit').value,
-                breakdown: document.getElementById('ta-jenis-breakdown').value,
+                jenisBreakdown: document.getElementById('ta-jenis-breakdown').value,
                 komponen: document.getElementById('ta-komponen').value,
-                status: statusVal,
-                badgeClass: badgeClasses[statusVal] || "badge-open",
-                foto: base64ImageStr || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
-                pengawas: document.getElementById('ta-pengawas').value
+                status: document.getElementById('ta-status').value,
+                symptom: document.getElementById('ta-symptom').value,
+                rootCause: document.getElementById('ta-rootcause').value,
+                perbaikan: document.getElementById('ta-perbaikan').value,
+                pencegahan: document.getElementById('ta-pencegahan').value,
+                namaPengawas: document.getElementById('ta-pengawas').value,
+                fileData: "",
+                fileName: "",
+                fileType: ""
             };
 
-            let listTA = JSON.parse(localStorage.getItem('ppd_ta_data')) || [];
-            listTA.push(taData);
-            localStorage.setItem('ppd_ta_data', JSON.stringify(listTA));
-
-            alert("Data Laporan Analisis Teknis Komponen berhasil disimpan!");
-            event.target.reset();
-            base64ImageStr = ""; // reset data string foto
-            
-            document.getElementById('ta-nama').value = currentUser.nama;
-            document.getElementById('ta-nrp').value = currentUser.nrp;
-
-            loadTechnicalAnalysisData();
-        }
-
-        function loadTechnicalAnalysisData() {
-            const tableBody = document.querySelector('#ta-table tbody');
-            let listTA = JSON.parse(localStorage.getItem('ppd_ta_data')) || [];
-
-            if (listTA.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada data analisis kerusakan.</td></tr>`;
-                return;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    taData.fileData = e.target.result;
+                    taData.fileName = `${taData.unit}_${Date.now()}_${file.name}`;
+                    taData.fileType = file.type;
+                    kirimDataTA(taData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTA(taData, event.target, btnSubmit);
             }
-
-            tableBody.innerHTML = "";
-            listTA.forEach(ta => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${ta.analyst} <br><small style='color:#7f8c8d'>${ta.nrp}</small></td>
-                    <td>${ta.tanggal}</td>
-                    <td><strong>${ta.unit}</strong></td>
-                    <td>${ta.breakdown}</td>
-                    <td>${ta.komponen}</td>
-                    <td><span class="badge ${ta.badgeClass}">${ta.status}</span></td>
-                    <td><img src="${ta.foto}" class="img-preview" alt="Kondisi" onclick="alert('Lihat Gambar Skala Penuh Berhasil')"></td>
-                    <td>${ta.pengawas}</td>
-                `;
-                tableBody.appendChild(row);
-            });
         }
 
-        // 6. LOGIKA FORM MENTORING
-        function saveMentoring(event) {
+        function kirimDataTA(taData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(taData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Dokumen analisis & lampiran foto terunggah total!");
+                    loadTAHistory(taData.nrp);
+                    formElement.reset();
+                    document.getElementById('ta-nama').value = taData.nama;
+                    document.getElementById('ta-nrp').value = taData.nrp;
+                } else { alert("Gagal Simpan Laporan: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengunggah lampiran foto akibat limitasi timeout koneksi luar."))
+            .finally(() => { btnSubmit.innerText = "Simpan Laporan Teknis"; btnSubmit.disabled = false; });
+        }
+
+        function handleLogout(event) {
             event.preventDefault();
-            alert("Data Mentoring Lapangan berhasil direkam ke sistem internal.");
-            event.target.reset();
+            document.getElementById('main-application').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function switchSection(sectionId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('sec-' + sectionId).classList.add('active');
+            element.classList.add('active');
         }
     </script>
 </body>
