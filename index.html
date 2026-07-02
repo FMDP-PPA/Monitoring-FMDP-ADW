@@ -417,8 +417,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Lampiran Foto / Berkas Pendukung</label>
-                            <input type="url" id="ta-link" placeholder="https://drive.google.com/..." required>
+                            <label>Upload Foto Pendukung</label>
+                            <input type="file" id="ta-file" accept="image/*" required>
                         </div>
                         <div class="form-group">
                             <label>Nama Pengawas</label>
@@ -427,7 +427,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Gejala / Masaslah Kerusakan (Symptom)</label>
+                        <label>Gejala / Masalah Kerusakan (Symptom)</label>
                         <textarea id="ta-symptom" rows="2" placeholder="Jelaskan kendala awal atau indikasi masalah pada unit..." required></textarea>
                     </div>
 
@@ -570,7 +570,7 @@
                         const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
                         let tanggalAktivitas = item.tanggal.includes('-') ? 
                             new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
-                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, packageTanggal[0]);
 
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
@@ -642,6 +642,11 @@
                         if(item.status === "On Progress") statusClass = "badge-progress";
                         if(item.status === "Closed") statusClass = "badge-closed";
 
+                        let linkHtml = "-";
+                        if(item.linkLampiran && item.linkLampiran !== "-") {
+                            linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:600;">Lihat Foto 🔗</a>`;
+                        }
+
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${item.tanggal}</td>
@@ -652,7 +657,7 @@
                             <td>${item.rootCause}</td>
                             <td>${item.perbaikan}</td>
                             <td>${item.pencegahan}</td>
-                            <td><a href="${item.linkLampiran}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:600;">Lihat Foto 🔗</a></td>
+                            <td>${linkHtml}</td>
                             <td><span class="badge ${statusClass}">${item.status}</span></td>
                             <td>${item.namaPengawas}</td>
                         `;
@@ -670,7 +675,10 @@
         function saveTechnicalAnalysis(event) {
             event.preventDefault();
             const btnSubmit = event.target.querySelector('.btn-submit');
-            btnSubmit.innerText = "Menyimpan Analisis..."; btnSubmit.disabled = true;
+            btnSubmit.innerText = "Mengunggah & Menyimpan..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('ta-file');
+            const file = fileInput.files[0];
 
             const taData = {
                 action: "saveTA",
@@ -680,27 +688,44 @@
                 unit: document.getElementById('ta-unit').value,
                 jenisBreakdown: document.getElementById('ta-jenis-breakdown').value,
                 komponen: document.getElementById('ta-komponen').value,
-                linkLampiran: document.getElementById('ta-link').value,
                 status: document.getElementById('ta-status').value,
                 symptom: document.getElementById('ta-symptom').value,
                 rootCause: document.getElementById('ta-rootcause').value,
                 perbaikan: document.getElementById('ta-perbaikan').value,
                 pencegahan: document.getElementById('ta-pencegahan').value,
-                namaPengawas: document.getElementById('ta-pengawas').value
+                namaPengawas: document.getElementById('ta-pengawas').value,
+                fileData: "",
+                fileName: "",
+                fileType: ""
             };
 
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    taData.fileData = e.target.result;
+                    taData.fileName = `${taData.unit}_${Date.now()}_${file.name}`;
+                    taData.fileType = file.type;
+                    kirimDataTA(taData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTA(taData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataTA(taData, formElement, btnSubmit) {
             fetch(scriptUrl, { method: "POST", body: JSON.stringify(taData) })
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Data Technical Analysis berhasil disimpan!");
+                    alert("Data Analisis & Foto Berhasil Diunggah ke Server!");
                     loadTAHistory(taData.nrp);
-                    event.target.reset();
+                    formElement.reset();
                     document.getElementById('ta-nama').value = taData.nama;
                     document.getElementById('ta-nrp').value = taData.nrp;
                 } else { alert("Gagal menyimpan analisis: " + data.error); }
             })
-            .catch(error => alert("Koneksi terputus saat menyimpan data."))
+            .catch(error => alert("Koneksi terputus saat mengunggah berkas."))
             .finally(() => { btnSubmit.innerText = "Simpan Analisis Teknik"; btnSubmit.disabled = false; });
         }
 
