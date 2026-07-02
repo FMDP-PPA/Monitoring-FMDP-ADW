@@ -246,6 +246,19 @@
             background-color: #f2f2f2;
             color: #2c3e50;
         }
+
+        /* Badge Status untuk TA */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+        }
+        .badge-open { background-color: #e74c3c; color: white; }
+        .badge-progress { background-color: #f39c12; color: white; }
+        .badge-closed { background-color: #2ecc71; color: white; }
     </style>
 </head>
 <body>
@@ -317,7 +330,7 @@
                         </div>
                         <div class="form-group">
                             <label>5. Unit CN</label>
-                            <input type="text" id="act-unit" placeholder="Isikan nomor lambung unit jika bukan unit tuliskan non unit" required>
+                            <input type="text" id="act-unit" placeholder="Isikan nomor lambung unit atau 'non unit'" required>
                         </div>
                         <div class="form-group">
                             <label>7. Durasi (Menit)</label>
@@ -344,27 +357,91 @@
                     <table id="activity-table">
                         <thead>
                             <tr>
-                                <th>Nama</th>
-                                <th>NRP</th>
-                                <th>Tanggal</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Selesai</th>
-                                <th>Unit CN</th>
-                                <th>Activity</th>
-                                <th>Durasi</th>
-                                <th>Keterangan</th>
+                                <th>Nama</th><th>NRP</th><th>Tanggal</th><th>Jam Mulai</th><th>Jam Selesai</th><th>Unit CN</th><th>Activity</th><th>Durasi</th><th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="9" style="text-align: center; color: #999;" id="status-tabel">Belum ada riwayat aktivitas yang dimuat.</td>
-                            </tr>
+                            <tr><td colspan="9" style="text-align: center; color: #999;">Belum ada riwayat aktivitas yang dimuat.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div id="sec-technical-analysis" class="content-section"><h2>Technical Analysis</h2><p>Halaman Technical Analysis sedang dalam pengembangan.</p></div>
+            <div id="sec-technical-analysis" class="content-section">
+                <h2>Form Technical Analysis (TA)</h2>
+                <p style="margin-bottom: 20px; color: #666;">Input data pengamatan, analisa penyebab, dan status unit di bawah ini:</p>
+                
+                <form onsubmit="saveTechnicalAnalysis(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Analyst</label>
+                            <input type="text" id="ta-nama" readonly placeholder="Otomatis terisi saat login">
+                        </div>
+                        <div class="form-group">
+                            <label>NRP</label>
+                            <input type="text" id="ta-nrp" readonly placeholder="Otomatis terisi saat login">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Analisis</label>
+                            <input type="date" id="ta-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Unit CN (Nomor Lambung)</label>
+                            <input type="text" id="ta-unit" placeholder="Contoh: CN201, EX300" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Link Foto / Dokumen Pendukung</label>
+                            <input type="url" id="ta-link" placeholder="https://drive.google.com/..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Unit</label>
+                            <select id="ta-status" required>
+                                <option value="" disabled selected>-- Pilih Status --</option>
+                                <option value="Open">Open (Belum Diperbaiki)</option>
+                                <option value="On Progress">On Progress (Sedang Diperbaiki)</option>
+                                <option value="Closed">Closed (Selesai Diperbaiki)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gejala / Keluhan Kerusakan (Symptom)</label>
+                        <textarea id="ta-symptom" rows="2" placeholder="Jelaskan kendala awal atau indikasi kerusakan pada unit..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Analisis Penyebab Masalah (Root Cause Analysis)</label>
+                        <textarea id="ta-rootcause" rows="2" placeholder="Jelaskan hasil analisa mekanis/teknis penyebab kerusakan..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rekomendasi Tindakan (Action Required)</label>
+                        <textarea id="ta-rekomendasi" rows="2" placeholder="Langkah perbaikan atau part yang wajib diganti..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Keterangan Tambahan</label>
+                        <textarea id="ta-keterangan" rows="2" placeholder="Catatan opsional di luar analisa teknis..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="background-color: #34495e;">Simpan Analisis Teknik</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Papan Monitoring Analisis Teknis</h3>
+                    <table id="ta-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th><th>Unit CN</th><th>Gejala (Symptom)</th><th>Analisis (Root Cause)</th><th>Rekomendasi</th><th>Lampiran</th><th>Status</th><th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="8" style="text-align: center; color: #999;">Belum ada riwayat analisis yang dimuat.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div id="sec-mentoring" class="content-section"><h2>Mentoring</h2><p>Halaman Mentoring sedang dalam pengembangan.</p></div>
             <div id="sec-training" class="content-section"><h2>Training</h2><p>Halaman Training sedang dalam pengembangan.</p></div>
             <div id="sec-modul" class="content-section"><h2>Modul</h2><p>Halaman Modul sedang dalam pengembangan.</p></div>
@@ -373,8 +450,8 @@
     </div>
 
     <script>
-        // URL Google Apps Script milik Anda
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
+        let globalNrp = "";
 
         function handleLogin() {
             const userInp = document.getElementById('username').value;
@@ -389,34 +466,37 @@
             btnLogin.innerText = "Memverifikasi...";
             btnLogin.disabled = true;
 
-            const loginData = {
-                action: "login",
-                username: userInp,
-                password: passInp
-            };
-
             fetch(scriptUrl, {
                 method: "POST",
-                body: JSON.stringify(loginData)
+                body: JSON.stringify({ action: "login", username: userInp, password: passInp })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.result === "success") {
+                    globalNrp = data.nrp;
                     document.getElementById('user-display-name').innerText = data.nama;
+                    
+                    // Isi form otomatis DAR
                     document.getElementById('act-nama').value = data.nama;
                     document.getElementById('act-nrp').value = data.nrp;
+                    
+                    // Isi form otomatis TA
+                    document.getElementById('ta-nama').value = data.nama;
+                    document.getElementById('ta-nrp').value = data.nrp;
 
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('main-application').style.display = 'block';
 
+                    // Muat semua riwayat data
                     loadActivityHistory(data.nrp);
+                    loadTAHistory(data.nrp);
                 } else {
                     alert(data.message);
                 }
             })
             .catch(error => {
                 console.error("Error Login:", error);
-                alert("Gagal terhubung ke basis data. Pastikan setelan Apps Script Anda adalah 'Anyone'.");
+                alert("Gagal terhubung ke basis data.");
             })
             .finally(() => {
                 btnLogin.innerText = "Masuk Aplikasi";
@@ -424,14 +504,15 @@
             });
         }
 
+        // ==========================================
+        // SCRIPT MENU 1: DAILY ACTIVITY (DAR)
+        // ==========================================
         function loadActivityHistory(nrpUser) {
             const tableBody = document.querySelector('#activity-table tbody');
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Memuat riwayat aktivitas pekan ini...</td></tr>`;
 
-            // --- LOGIKA HITUNG RENTANG TANGGAL SENIN - MINGGU ---
             const sekarang = new Date();
-            const hariSekarang = sekarang.getDay(); // 0 = Minggu, 1 = Senin, dst.
-            
+            const hariSekarang = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
@@ -448,60 +529,35 @@
             .then(response => response.json())
             .then(data => {
                 tableBody.innerHTML = "";
-                
                 if (data.result === "success" && data.history.length > 0) {
                     let adaDataPekanIni = false;
-
                     data.history.forEach(item => {
-                        // Membaca teks format tanggal dari Sheets dan mengubahnya ke Objek Tanggal Javascript
                         const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
-                        let tanggalAktivitas;
-                        
-                        if (item.tanggal.includes('-')) {
-                            tanggalAktivitas = new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]);
-                        } else {
-                            tanggalAktivitas = new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
-                        }
+                        let tanggalAktivitas = item.tanggal.includes('-') ? 
+                            new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
 
-                        // Saring hanya data yang berada di rentang Senin s.d Minggu di pekan ini saja
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
                             const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${item.nama}</td>
-                                <td>${item.nrp}</td>
-                                <td>${item.tanggal}</td>
-                                <td>${item.waktuMulai}</td>
-                                <td>${item.waktuSelesai}</td>
-                                <td>${item.unit}</td>
-                                <td>${item.activity}</td>
-                                <td>${item.durasi}</td>
-                                <td>${item.keterangan}</td>
-                            `;
+                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
                             tableBody.appendChild(row);
                         }
                     });
-
-                    if (!adaDataPekanIni) {
-                        tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Tidak ada riwayat aktivitas untuk pekan ini (Senin - Minggu).</td></tr>`;
-                    }
+                    if (!adaDataPekanIni) tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Tidak ada riwayat aktivitas untuk pekan ini.</td></tr>`;
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Belum ada riwayat aktivitas yang tersimpan untuk akun ini.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Belum ada riwayat aktivitas.</td></tr>`;
                 }
             })
             .catch(error => {
-                console.error("Error load history:", error);
-                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">Gagal memuat data riwayat dari Google Sheets.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">Gagal memuat data DAR.</td></tr>`;
             });
         }
 
         function saveActivity(event) {
             event.preventDefault();
-
             const btnSubmit = event.target.querySelector('.btn-submit');
-            const originalText = btnSubmit.innerText;
-            btnSubmit.innerText = "Mengirim data...";
-            btnSubmit.disabled = true;
+            btnSubmit.innerText = "Mengirim..."; btnSubmit.disabled = true;
 
             const formData = {
                 action: "activity",
@@ -516,56 +572,108 @@
                 keterangan: document.getElementById('act-keterangan').value || "-"
             };
 
-            fetch(scriptUrl, {
-                method: "POST",
-                body: JSON.stringify(formData)
-            })
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Data berhasil tersimpan langsung ke Google Sheets!");
-                    
+                    alert("Aktivitas harian berhasil disimpan!");
                     loadActivityHistory(formData.nrp);
-                    
-                    document.getElementById('act-tanggal').value = '';
-                    document.getElementById('act-waktu-mulai').value = '';
-                    document.getElementById('act-waktu-selesai').value = '';
-                    document.getElementById('act-unit').value = '';
-                    document.getElementById('act-activity').value = '';
-                    document.getElementById('act-durasi').value = '';
-                    document.getElementById('act-keterangan').value = '';
+                    event.target.reset();
+                    document.getElementById('act-nama').value = formData.nama;
+                    document.getElementById('act-nrp').value = formData.nrp;
+                } else { alert("Gagal: " + data.error); }
+            })
+            .catch(error => alert("Terjadi kesalahan koneksi."))
+            .finally(() => { btnSubmit.innerText = "Simpan Aktivitas"; btnSubmit.disabled = false; });
+        }
+
+        // ==========================================
+        // SCRIPT MENU 2: TECHNICAL ANALYSIS (TA)
+        // ==========================================
+        function loadTAHistory(nrpUser) {
+            const tableBody = document.querySelector('#ta-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #999;">Memuat papan pantau analisa...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTAHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let statusClass = "badge-open";
+                        if(item.status === "On Progress") statusClass = "badge-progress";
+                        if(item.status === "Closed") statusClass = "badge-closed";
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.tanggal}</td>
+                            <td><strong>${item.unit}</strong></td>
+                            <td>${item.symptom}</td>
+                            <td>${item.rootCause}</td>
+                            <td>${item.rekomendasi}</td>
+                            <td><a href="${item.linkLampiran}" target="_blank" style="color:#3498db; text-decoration:none; font-weight:600;">Lihat Berkas 🔗</a></td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td>
+                            <td>${item.keterangan}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
                 } else {
-                    alert("Gagal menyimpan: " + data.error);
+                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #999;">Belum ada riwayat data analisis teknis yang di-input.</td></tr>`;
                 }
             })
             .catch(error => {
-                console.error("Error Save Activity:", error);
-                alert("Terjadi kesalahan koneksi saat mengirim data.");
-            })
-            .finally(() => {
-                btnSubmit.innerText = originalText;
-                btnSubmit.disabled = false;
+                tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Gagal memuat papan pantau TA.</td></tr>`;
             });
+        }
+
+        function saveTechnicalAnalysis(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Menyimpan Analisis..."; btnSubmit.disabled = true;
+
+            const taData = {
+                action: "saveTA",
+                nama: document.getElementById('ta-nama').value,
+                nrp: document.getElementById('ta-nrp').value,
+                tanggal: document.getElementById('ta-tanggal').value,
+                unit: document.getElementById('ta-unit').value,
+                linkLampiran: document.getElementById('ta-link').value,
+                status: document.getElementById('ta-status').value,
+                symptom: document.getElementById('ta-symptom').value,
+                rootCause: document.getElementById('ta-rootcause').value,
+                rekomendasi: document.getElementById('ta-rekomendasi').value,
+                keterangan: document.getElementById('ta-keterangan').value || "-"
+            };
+
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(taData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Data Technical Analysis berhasil disimpan ke server!");
+                    loadTAHistory(taData.nrp);
+                    event.target.reset();
+                    document.getElementById('ta-nama').value = taData.nama;
+                    document.getElementById('ta-nrp').value = taData.nrp;
+                } else { alert("Gagal menyimpan analisis: " + data.error); }
+            })
+            .catch(error => alert("Koneksi terputus saat menyimpan data."))
+            .finally(() => { btnSubmit.innerText = "Simpan Analisis Teknik"; btnSubmit.disabled = false; });
         }
 
         function handleLogout(event) {
             event.preventDefault();
             document.getElementById('main-application').style.display = 'none';
             document.getElementById('login-page').style.display = 'flex';
-            
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            
-            document.getElementById('user-display-name').innerText = 'User';
-            document.getElementById('act-nama').value = '';
-            document.getElementById('act-nrp').value = '';
-            document.querySelector('#activity-table tbody').innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Belum ada riwayat aktivitas yang dimuat.</td></tr>`;
         }
 
         function switchSection(sectionId, element) {
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(sec => sec.classList.remove('active'));
-
             const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => link.classList.remove('active'));
 
