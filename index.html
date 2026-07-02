@@ -314,41 +314,41 @@
                 <form onsubmit="saveActivity(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>1. Nama</label>
+                            <label>Nama</label>
                             <input type="text" id="act-nama" readonly placeholder="Otomatis terisi saat login">
                         </div>
                         <div class="form-group">
-                            <label>2. NRP</label>
+                            <label>NRP</label>
                             <input type="text" id="act-nrp" readonly placeholder="Otomatis terisi saat login">
                         </div>
                         <div class="form-group">
-                            <label>3. Tanggal</label>
+                            <label>Tanggal</label>
                             <input type="date" id="act-tanggal" required>
                         </div>
                         <div class="form-group">
-                            <label>4. Waktu (Pukul)</label>
+                            <label>Waktu (Pukul)</label>
                             <div class="time-grid">
                                 <input type="time" id="act-waktu-mulai" title="Jam Mulai" required>
                                 <input type="time" id="act-waktu-selesai" title="Jam Selesai" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>5. Unit CN</label>
+                            <label>Unit CN</label>
                             <input type="text" id="act-unit" placeholder="Isikan nomor lambung unit atau 'non unit'" required>
                         </div>
                         <div class="form-group">
-                            <label>7. Durasi (Menit)</label>
+                            <label>Durasi (Menit)</label>
                             <input type="number" id="act-durasi" placeholder="Contoh: 60" min="1" required>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label>6. Activity (Aktivitas yang Dilakukan)</label>
+                        <label>Activity (Aktivitas yang Dilakukan)</label>
                         <textarea id="act-activity" rows="3" placeholder="Jelaskan aktivitas Anda..." required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>8. Keterangan</label>
+                        <label>Keterangan</label>
                         <textarea id="act-keterangan" rows="3" placeholder="Keterangan tambahan (opsional)"></textarea>
                     </div>
 
@@ -380,23 +380,23 @@
                 <form onsubmit="saveTechnicalAnalysis(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>1. Nama Analyst</label>
+                            <label>Nama Analyst</label>
                             <input type="text" id="ta-nama" readonly placeholder="Otomatis terisi saat login">
                         </div>
                         <div class="form-group">
-                            <label>2. NRP</label>
+                            <label>NRP</label>
                             <input type="text" id="ta-nrp" readonly placeholder="Otomatis terisi saat login">
                         </div>
                         <div class="form-group">
-                            <label>3. Tanggal Analisis</label>
+                            <label>Tanggal Analisis</label>
                             <input type="date" id="ta-tanggal" required>
                         </div>
                         <div class="form-group">
-                            <label>4. Unit CN</label>
+                            <label>Unit CN</label>
                             <input type="text" id="ta-unit" placeholder="Contoh: CN201, EX300" required>
                         </div>
                         <div class="form-group">
-                            <label>5. Jenis Breakdown</label>
+                            <label>Jenis Breakdown</label>
                             <select id="ta-jenis-breakdown" required>
                                 <option value="" disabled selected>-- Pilih Jenis Breakdown --</option>
                                 <option value="Schedule">Schedule</option>
@@ -404,11 +404,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>6. Komponen</label>
+                            <label>Komponen</label>
                             <input type="text" id="ta-komponen" placeholder="Contoh: Engine, Hydraulic Pump, Transmission" required>
                         </div>
                         <div class="form-group">
-                            <label>11. Status Unit</label>
+                            <label>Status Unit</label>
                             <select id="ta-status" required>
                                 <option value="" disabled selected>-- Pilih Status --</option>
                                 <option value="Open">Open (Belum Diperbaiki)</option>
@@ -417,32 +417,32 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>12. Lampiran Foto / Berkas Pendukung</label>
+                            <label>Lampiran Foto / Berkas Pendukung</label>
                             <input type="url" id="ta-link" placeholder="https://drive.google.com/..." required>
                         </div>
                         <div class="form-group">
-                            <label>13. Nama Pengawas</label>
+                            <label>Nama Pengawas</label>
                             <input type="text" id="ta-pengawas" placeholder="Masukkan nama pengawas lapangan" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>7. Gejala / Masalah Kerusakan (Symptom)</label>
+                        <label>Gejala / Masaslah Kerusakan (Symptom)</label>
                         <textarea id="ta-symptom" rows="2" placeholder="Jelaskan kendala awal atau indikasi masalah pada unit..." required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>8. Analisa Kerusakan (Root Cause Analysis)</label>
+                        <label>Analisa Kerusakan (Root Cause Analysis)</label>
                         <textarea id="ta-rootcause" rows="2" placeholder="Jelaskan hasil analisa teknis detail penyebab kerusakan..." required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>9. Perbaikan</label>
+                        <label>Perbaikan</label>
                         <textarea id="ta-perbaikan" rows="2" placeholder="Tindakan perbaikan yang telah/sedang dilakukan..." required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>10. Rekomendasi Pencegahan</label>
+                        <label>Rekomendasi Pencegahan</label>
                         <textarea id="ta-pencegahan" rows="2" placeholder="Langkah pencegahan agar kerusakan serupa tidak terulang kembali..." required></textarea>
                     </div>
 
@@ -547,7 +547,7 @@
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #999;">Memuat riwayat aktivitas pekan ini...</td></tr>`;
 
             const sekarang = new Date();
-            const hariSekarang = cigars = sekarang.getDay();
+            const hariSekarang = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
