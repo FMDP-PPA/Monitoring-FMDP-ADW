@@ -263,7 +263,6 @@
 </head>
 <body>
 
-    <!-- 1. HALAMAN LOGIN -->
     <div id="login-page" class="login-wrapper">
         <div class="login-card">
             <h2>Portal Login</h2>
@@ -281,7 +280,6 @@
         </div>
     </div>
 
-    <!-- 2. HALAMAN UTAMA -->
     <div id="main-application">
         <nav class="navbar">
             <div class="logo">AppSystem</div>
@@ -298,7 +296,6 @@
 
         <div class="container">
             
-            <!-- SECTION: BERANDA -->
             <div id="sec-beranda" class="content-section active">
                 <div class="welcome-box">
                     <h1>Selamat Datang Kembali, <span id="user-display-name">User</span>!</h1>
@@ -306,7 +303,6 @@
                 </div>
             </div>
 
-            <!-- SECTION: DAILY ACTIVITY -->
             <div id="sec-daily-activity" class="content-section">
                 <h2>Form Daily Activity</h2>
                 <p style="margin-bottom: 20px; color: #666;">Silakan isi laporan aktivitas harian Anda di bawah ini:</p>
@@ -355,7 +351,6 @@
                     <button type="submit" class="btn-submit">Simpan Aktivitas</button>
                 </form>
 
-                <!-- Tabel Rangkuman DAR -->
                 <div class="table-responsive">
                     <h3>Riwayat Aktivitas Anda</h3>
                     <p style="font-size: 13px; color: #7f8c8d; margin-bottom: 12px;">Menampilkan laporan pekan ini saja (Cut-off: Senin s.d. Minggu)</p>
@@ -372,7 +367,6 @@
                 </div>
             </div>
 
-            <!-- SECTION: TECHNICAL ANALYSIS -->
             <div id="sec-technical-analysis" class="content-section">
                 <h2>Form Technical Analysis (TA)</h2>
                 <p style="margin-bottom: 20px; color: #666;">Silakan isi formulir analisa teknis kerusakan unit di bawah ini:</p>
@@ -449,7 +443,6 @@
                     <button type="submit" class="btn-submit" style="background-color: #34495e;">Simpan Analisis Teknik</button>
                 </form>
 
-                <!-- Tabel Papan Pantau TA -->
                 <div class="table-responsive">
                     <h3>Papan Monitoring Analisis Teknis</h3>
                     <table id="ta-table">
@@ -475,7 +468,6 @@
                 </div>
             </div>
 
-            <!-- SECTION: MENU LAIN -->
             <div id="sec-mentoring" class="content-section"><h2>Mentoring</h2><p>Halaman Mentoring sedang dalam pengembangan.</p></div>
             <div id="sec-training" class="content-section"><h2>Training</h2><p>Halaman Training sedang dalam pengembangan.</p></div>
             <div id="sec-modul" class="content-section"><h2>Modul</h2><p>Halaman Modul sedang dalam pengembangan.</p></div>
@@ -483,7 +475,6 @@
         </div>
     </div>
 
-    <!-- LOGIKA JAVASCRIPT INTEGRASI -->
     <script>
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
         let globalNrp = "";
@@ -570,7 +561,7 @@
                         const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
                         let tanggalAktivitas = item.tanggal.includes('-') ? 
                             new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
-                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, packageTanggal[0]);
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
 
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
