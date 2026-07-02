@@ -29,10 +29,8 @@
             flex: 1;
             padding: 20px;
             position: relative;
-            /* Menggunakan gambar ilustrasi pertambangan alat berat yang merepresentasikan operasional PPA */
-            background: linear-gradient(135deg, rgba(13, 32, 64, 0.88) 0%, rgba(214, 28, 34, 0.82) 100%), 
-                        url('https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=1200') no-repeat center center;
-            background-size: cover;
+            /* Latar belakang gradasi polos warna korporat PPA yang clean, aman, & stabil */
+            background: linear-gradient(135deg, #0d2040 0%, #d61c22 100%);
             overflow: hidden;
         }
 
@@ -46,10 +44,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            pointer-events: none; /* Agar tidak mengganggu klik di layar */
+            pointer-events: none;
         }
 
-        /* Placeholder kotak logo yang responsif dan menyatu dengan warna background */
+        /* Kotak logo yang menyatu dengan warna background */
         .logo-placeholder {
             background: rgba(255, 255, 255, 0.9);
             padding: 8px 16px;
@@ -461,16 +459,16 @@
 </head>
 <body>
 
-    <!-- 1. HALAMAN LOGIN PREMIUM DENGAN DUAL LOGO -->
+    <!-- 1. HALAMAN LOGIN PREMIUM DENGAN DUAL LOGO & GRADASI POLOS -->
     <div id="login-page" class="login-wrapper">
         
         <!-- Header Identitas Logo Kiri & Kanan -->
         <div class="login-header-logos">
-            <!-- Mereferensikan file PPA Asli.png di kiri atas -->
+            <!-- Referensi ke berkas PPA Asli.png di kiri atas -->
             <div class="logo-placeholder logo-left">
                 🔴 PPA (PPA Asli.png)
             </div>
-            <!-- Mereferensikan file LOGO PPD NEW HIRES.jpg di kanan atas -->
+            <!-- Referensi ke berkas LOGO PPD NEW HIRES.jpg di kanan atas -->
             <div class="logo-placeholder logo-right">
                 🔵 PPD (LOGO PPD NEW HIRES.jpg)
             </div>
@@ -485,7 +483,7 @@
                     <input type="text" id="username" placeholder="Masukkan ID atau username">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label pour="password">Password</label>
                     <input type="password" id="password" placeholder="Masukkan sandi keamanan">
                 </div>
                 <button type="button" class="btn-login" onclick="handleLogin()">Masuk Portal</button>
@@ -754,7 +752,7 @@
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
 
             const sekarang = new Date();
-            const hariSekarang = sekarang.getDay();
+            const hariSekarang = Thermal = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
