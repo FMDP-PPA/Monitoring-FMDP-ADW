@@ -21,38 +21,86 @@
             min-height: 100vh;
         }
 
-        /* --- 1. GAYA HALAMAN LOGIN (TEMA PPA/PPD) --- */
+        /* --- 1. GAYA HALAMAN LOGIN PREMIUM (TEMA PPA SITE ADW) --- */
         .login-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             flex: 1;
             padding: 20px;
-            background: linear-gradient(135deg, #0d2040 0%, #d61c22 100%);
+            position: relative;
+            /* Menggunakan gambar ilustrasi pertambangan alat berat yang merepresentasikan operasional PPA */
+            background: linear-gradient(135deg, rgba(13, 32, 64, 0.88) 0%, rgba(214, 28, 34, 0.82) 100%), 
+                        url('https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&q=80&w=1200') no-repeat center center;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        /* Dual Logo Header di Background Login */
+        .login-header-logos {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            padding: 0 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none; /* Agar tidak mengganggu klik di layar */
+        }
+
+        /* Placeholder kotak logo yang responsif dan menyatu dengan warna background */
+        .logo-placeholder {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-left {
+            color: #d61c22;
+            border-left: 4px solid #d61c22;
+        }
+
+        .logo-right {
+            color: #0d2040;
+            border-right: 4px solid #0d2040;
         }
 
         .login-card {
-            background: #ffffff;
-            padding: 40px 35px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            padding: 45px 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             text-align: center;
-            border-top: 5px solid #d61c22;
+            border-top: 6px solid #d61c22;
+            position: relative;
+            z-index: 2;
         }
 
         .login-card h2 {
             margin-bottom: 8px;
             color: #0d2040;
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .login-card p {
-            color: #7f8c8d;
-            font-size: 14px;
-            margin-bottom: 30px;
+            color: #57606f;
+            font-size: 13.5px;
+            margin-bottom: 35px;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
         .form-group {
@@ -63,8 +111,8 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 12.5px;
             color: #0d2040;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -103,10 +151,12 @@
             border: none;
             border-radius: 6px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(13, 32, 64, 0.2);
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-login:hover:not(:disabled) {
@@ -287,6 +337,18 @@
             .nav-links a.active {
                 background-color: #d61c22;
             }
+            .login-header-logos {
+                position: relative;
+                top: 0;
+                padding: 10px 0;
+                margin-bottom: 20px;
+                justify-content: center;
+                gap: 20px;
+            }
+            .login-wrapper {
+                flex-direction: column;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -399,11 +461,24 @@
 </head>
 <body>
 
-    <!-- 1. HALAMAN LOGIN -->
+    <!-- 1. HALAMAN LOGIN PREMIUM DENGAN DUAL LOGO -->
     <div id="login-page" class="login-wrapper">
+        
+        <!-- Header Identitas Logo Kiri & Kanan -->
+        <div class="login-header-logos">
+            <!-- Mereferensikan file PPA Asli.png di kiri atas -->
+            <div class="logo-placeholder logo-left">
+                🔴 PPA (PPA Asli.png)
+            </div>
+            <!-- Mereferensikan file LOGO PPD NEW HIRES.jpg di kanan atas -->
+            <div class="logo-placeholder logo-right">
+                🔵 PPD (LOGO PPD NEW HIRES.jpg)
+            </div>
+        </div>
+
         <div class="login-card">
-            <h2>PPD Portal System</h2>
-            <p>Plant People Development - PPA</p>
+            <h2>PPD Portal</h2>
+            <p>Plant People Development - PPA Site ADW</p>
             <div id="login-form-container">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -413,7 +488,7 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Masukkan sandi keamanan">
                 </div>
-                <button type="button" class="btn-login" onclick="handleLogin()">Masuk Aplikasi</button>
+                <button type="button" class="btn-login" onclick="handleLogin()">Masuk Portal</button>
             </div>
         </div>
     </div>
@@ -636,7 +711,7 @@
             }
 
             const btnLogin = document.querySelector('.btn-login');
-            btnLogin.innerText = "Memproses Validasi Cloud...";
+            btnLogin.innerText = "Memverifikasi Otoritas Portal...";
             btnLogin.disabled = true;
 
             fetch(scriptUrl, {
@@ -669,7 +744,7 @@
                 alert("Gagal menghubungi server basis data.");
             })
             .finally(() => {
-                btnLogin.innerText = "Masuk Aplikasi";
+                btnLogin.innerText = "Masuk Portal";
                 btnLogin.disabled = false;
             });
         }
@@ -702,7 +777,7 @@
                         const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
                         let tanggalAktivitas = item.tanggal.includes('-') ? 
                             new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
-                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, boss[0]);
+                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
 
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
