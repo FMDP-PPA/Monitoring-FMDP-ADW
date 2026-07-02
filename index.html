@@ -372,7 +372,7 @@
     </div>
 
     <script>
-        // URL Google Apps Script Terbarumu
+        // URL Google Apps Script yang sudah Anda sesuaikan
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
 
         function handleLogin() {
@@ -394,7 +394,6 @@
                 password: passInp
             };
 
-            // Mengirim data menggunakan format text/plain agar bebas dari hambatan CORS di GitHub Pages
             fetch(scriptUrl, {
                 method: "POST",
                 body: JSON.stringify(loginData)
@@ -416,7 +415,7 @@
             })
             .catch(error => {
                 console.error("Error Login:", error);
-                alert("Gagal terhubung ke basis data. Silakan pastikan deploy Apps Script Anda sudah di-set ke 'Anyone'.");
+                alert("Gagal terhubung ke basis data. Pastikan setelan Apps Script Anda adalah 'Anyone'.");
             })
             .finally(() => {
                 btnLogin.innerText = "Masuk Aplikasi";
