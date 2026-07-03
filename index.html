@@ -29,7 +29,6 @@
             flex: 1;
             padding: 20px;
             position: relative;
-            /* Latar belakang gradasi polos warna korporat PPA yang clean, aman, & stabil */
             background: linear-gradient(135deg, #0d2040 0%, #d61c22 100%);
             overflow: hidden;
         }
@@ -46,6 +45,18 @@
             border-top: 6px solid #d61c22;
             position: relative;
             z-index: 2;
+        }
+
+        /* Gaya untuk logo halaman login baru */
+        .login-logo {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .login-card h2 {
@@ -144,11 +155,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 4%;
-            height: 80px; /* Sedikit dinaikkan untuk mengakomodasi logo & 2 baris teks */
+            height: 80px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        /* Kontainer Identitas Kiri (Logo + Teks Dua Baris) */
         .brand-container {
             display: flex;
             align-items: center;
@@ -158,7 +168,7 @@
         .brand-logo {
             width: 48px;
             height: 48px;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 8px;
             background-color: #ffffff;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -180,7 +190,7 @@
         }
 
         .brand-subtitle {
-            color: #ffeaa7; /* Warna aksen kuning soft/emas khas informasi */
+            color: #ffeaa7;
             font-size: 11.5px;
             font-weight: 500;
             letter-spacing: 0.5px;
@@ -273,7 +283,6 @@
             margin-bottom: 25px;
         }
 
-        /* CARD BERANDA */
         .welcome-box {
             background: linear-gradient(to right, #ffffff, #fdfdfd);
             border-left: 5px solid #d61c22;
@@ -292,7 +301,6 @@
             color: #d61c22;
         }
 
-        /* GRID SYSTEM FORM */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -306,7 +314,6 @@
             gap: 12px;
         }
 
-        /* RESPONSIVE DESIGN BREAKPOINTS */
         @media (max-width: 992px) {
             .navbar {
                 flex-direction: column;
@@ -425,7 +432,6 @@
             background-color: #f1f2f6;
         }
 
-        /* Badge Status */
         .badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -445,6 +451,8 @@
 
     <div id="login-page" class="login-wrapper">
         <div class="login-card">
+            <!-- Penambahan Logo Integrasi Dinamis di Atas Form Login -->
+            <img class="login-logo" src="<?= getLogoUrl(); ?>" alt="Logo Portal">
             <h2>PPD Web Portal</h2>
             <p>Plant People Development - PPA Site ADW</p>
             <div id="login-form-container">
@@ -464,7 +472,8 @@
     <div id="main-application">
         <nav class="navbar">
             <div class="brand-container">
-                <img class="brand-logo" alt="Logo PPD" src="data:image/jpeg;base64,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" />
+                <!-- Integrasi Logo Dinamis di Sisi Kiri Navbar -->
+                <img class="brand-logo" alt="Logo PPD" src="<?= getLogoUrl(); ?>" />
                 <div class="brand-text">
                     <span class="brand-title">Plant People Development</span>
                     <span class="brand-subtitle">PPA Site ADW</span>
@@ -721,7 +730,7 @@
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
 
             const sekarang = new Date();
-            const hariSekarang = sekarang.getDay();
+            const hariSekarang = ThermalAnalysis = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
