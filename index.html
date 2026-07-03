@@ -514,7 +514,7 @@
                     <table id="activity-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th><th>Nama</th><th>NRP</th><th>Mulai</th><th>Selesai</th><th>Unit</th><th>Aktivitas Kerja</th><th>Durasi</th><th>Keterangan</th>
+                                <th>Nama</th><th>NRP</th><th>Tanggal</th><th>Jam Mulai</th><th>Jam Selesai</th><th>Unit CN</th><th>Activity</th><th>Durasi</th><th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -603,11 +603,11 @@
                     <table id="ta-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th><th>Unit CN</th><th>Breakdown</th><th>Komponen</th><th>Gejala</th><th>Analisa Kerusakan</th><th>Perbaikan</th><th>Pencegahan</th><th>Foto Lampiran</th><th>Status</th><th>Pengawas</th>
+                                <th>Nama Analyst</th><th>NRP</th><th>Tanggal Analisis</th><th>Unit CN</th><th>Jenis Breakdown</th><th>Komponen</th><th>Gejala Masalah</th><th>Analisa Kerusakan</th><th>Perbaikan</th><th>Rekomendasi Pencegahan</th><th>Status</th><th>Lampiran Foto</th><th>Nama Pengawas</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="11" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data.</td></tr>
+                            <tr><td colspan="13" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -657,7 +657,7 @@
                     <table id="mentoring-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th><th>Nama</th><th>NRP</th><th>Mentor</th><th>Topik Materi</th><th>Detail Pembahasan</th><th>Nilai</th>
+                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Instruktur / Mentor</th><th>Materi / Topik</th><th>Detail Pembahasan</th><th>Nilai / Target</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -674,7 +674,6 @@
     </div>
 
     <script>
-        // ISI URL WEB APP APPS SCRIPT ANDA DI SINI
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
         let globalNrp = "";
 
@@ -700,7 +699,6 @@
                 if (data.result === "success") {
                     globalNrp = data.nrp;
                     
-                    // SINKRONISASI ELEMEN (MENCEGAH SALAH INDEKS NAMA/NRP)
                     document.getElementById('user-display-name').innerText = data.nama;
                     
                     document.getElementById('act-nama').value = data.nama;
@@ -746,7 +744,7 @@
                 if (data.result === "success" && data.history.length > 0) {
                     data.history.forEach(item => {
                         const row = document.createElement('tr');
-                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                        row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
                         tableBody.appendChild(row);
                     });
                 } else {
@@ -793,7 +791,7 @@
 
         function loadTAHistory(nrpUser) {
             const tableBody = document.querySelector('#ta-table tbody');
-            tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komplain...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komplain...</td></tr>`;
 
             fetch(scriptUrl, {
                 method: "POST",
@@ -813,20 +811,20 @@
 
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>${item.tanggal}</td><td><strong>${item.unit}</strong></td>
+                            <td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td><strong>${item.unit}</strong></td>
                             <td><span class="badge ${bdClass}">${item.jenisBreakdown}</span></td>
                             <td>${item.komponen}</td><td>${item.symptom}</td><td>${item.rootCause}</td>
-                            <td>${item.perbaikan}</td><td>${item.pencegahan}</td><td>${linkHtml}</td>
-                            <td><span class="badge ${statusClass}">${item.status}</span></td><td><em>${item.namaPengawas}</em></td>
+                            <td>${item.perbaikan}</td><td>${item.pencegahan}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td><td>${linkHtml}</td><td><em>${item.namaPengawas}</em></td>
                         `;
                         tableBody.appendChild(row);
                     });
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis.</td></tr>`;
                 }
             })
             .catch(error => {
-                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi tabel TAR.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi tabel TAR.</td></tr>`;
             });
         }
 
