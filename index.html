@@ -47,7 +47,6 @@
             z-index: 2;
         }
 
-        /* Gaya untuk logo halaman login baru */
         .login-logo {
             width: 75px;
             height: 75px;
@@ -451,7 +450,6 @@
 
     <div id="login-page" class="login-wrapper">
         <div class="login-card">
-            <!-- Penambahan Logo Integrasi Dinamis di Atas Form Login -->
             <img class="login-logo" src="<?= getLogoUrl(); ?>" alt="Logo Portal">
             <h2>PPD Web Portal</h2>
             <p>Plant People Development - PPA Site ADW</p>
@@ -472,7 +470,6 @@
     <div id="main-application">
         <nav class="navbar">
             <div class="brand-container">
-                <!-- Integrasi Logo Dinamis di Sisi Kiri Navbar -->
                 <img class="brand-logo" alt="Logo PPD" src="<?= getLogoUrl(); ?>" />
                 <div class="brand-text">
                     <span class="brand-title">Plant People Development</span>
@@ -501,8 +498,8 @@
             </div>
 
             <div id="sec-daily-activity" class="content-section">
-                <h2>Form Daily Activity (DAR)</h2>
-                <!-- POIN 1: Perubahan Deskripsi Sub-Header -->
+                <!-- REVISI: Mengubah Form Daily Activity (DAR) menjadi Form Daily Activity Report (DAR) -->
+                <h2>Form Daily Activity Report (DAR)</h2>
                 <p class="section-desc">Pencatatan laporan kegiatan harian siswa FMDP</p>
                 
                 <form onsubmit="saveActivity(event)">
@@ -516,12 +513,10 @@
                             <input type="text" id="act-nrp" readonly placeholder="Terbaca otomatis">
                         </div>
                         <div class="form-group">
-                            <!-- POIN 2: Perubahan Label Tanggal Pekerjaan -->
                             <label>Tanggal Pekerjaan</label>
                             <input type="date" id="act-tanggal" required>
                         </div>
                         <div class="form-group">
-                            <!-- POIN 3: Perubahan Label Waktu Pekerjaan -->
                             <label>Waktu Pekerjaan</label>
                             <div class="time-grid">
                                 <input type="time" id="act-waktu-mulai" title="Jam Mulai" required>
@@ -533,7 +528,6 @@
                             <input type="text" id="act-unit" placeholder="Isikan kode unit atau ketik 'Non-Unit'" required>
                         </div>
                         <div class="form-group">
-                            <!-- POIN 4: Perubahan Label Durasi Pekerjaan -->
                             <label>Durasi Pekerjaan (Menit)</label>
                             <input type="number" id="act-durasi" placeholder="Misal: 60, 120" min="1" required>
                         </div>
@@ -554,7 +548,6 @@
 
                 <div class="table-responsive">
                     <h3>Daftar Riwayat Aktivitas Anda</h3>
-                    <!-- POIN 5: Perubahan Deskripsi Atas Tabel -->
                     <p class="table-info-text">Menampilkan laporan aktifitas minggu ini (Senin s.d. Minggu)</p>
                     <table id="activity-table">
                         <thead>
@@ -570,13 +563,15 @@
             </div>
 
             <div id="sec-technical-analysis" class="content-section">
-                <h2>Form Technical Analysis (TA)</h2>
+                <!-- REVISI 1: Mengubah Form Technical Analysis (TA) menjadi Form Technical Analysis Report (TAR) -->
+                <h2>Form Technical Analysis Report (TAR)</h2>
                 <p class="section-desc">Pencatatan laporan analisis kerusakan komponen dan riwayat perbaikan unit.</p>
                 
                 <form onsubmit="saveTechnicalAnalysis(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Nama Analyst</label>
+                            <!-- REVISI 2: Mengubah Nama Analyst menjadi Nama Karyawan -->
+                            <label>Nama Karyawan</label>
                             <input type="text" id="ta-nama" readonly placeholder="Terbaca otomatis">
                         </div>
                         <div class="form-group">
@@ -584,7 +579,8 @@
                             <input type="text" id="ta-nrp" readonly placeholder="Terbaca otomatis">
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Analisis</label>
+                            <!-- REVISI 3: Mengubah Tanggal Analisis menjadi Tanggal Pekerjaan -->
+                            <label>Tanggal Pekerjaan</label>
                             <input type="date" id="ta-tanggal" required>
                         </div>
                         <div class="form-group">
@@ -642,11 +638,13 @@
                         <textarea id="ta-pencegahan" rows="2" placeholder="Langkah mitigasi ke depan agar kendala serupa tidak terulang kembali..." required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-submit" style="background-color: #0d2040; box-shadow: 0 3px 6px rgba(13, 32, 64, 0.2);">Simpan Laporan Teknis</button>
+                    <!-- REVISI 4: Menyelaraskan kelas tombol ke btn-submit merah (gaya inline warna biru tua lama telah dihapus) -->
+                    <button type="submit" class="btn-submit">Simpan Laporan Teknis</button>
                 </form>
 
                 <div class="table-responsive">
-                    <h3>Papan Monitoring Hasil Analisis Teknik</h3>
+                    <!-- REVISI 5: Mengubah Papan Monitoring Hasil Analisis Teknik menjadi riwayat laporan analisa teknik anda -->
+                    <h3>riwayat laporan analisa teknik anda</h3>
                     <p class="table-info-text">Pemantauan seluruh dokumen rekayasa analisis kerusakan unit</p>
                     <table id="ta-table">
                         <thead>
@@ -735,7 +733,7 @@
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
 
             const sekarang = new Date();
-            const hariSekarang = ThermalAnalysis = sekarang.getDay();
+            const hariSekarang = sekarang.getDay();
             const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
             const seninPekanIni = new Date(sekarang);
             seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
@@ -763,8 +761,6 @@
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
                             const row = document.createElement('tr');
-                            
-                            // POIN 6: Warna merah (style="color:#d61c22; font-weight:600;") pada item.unit sudah dihapus, disamakan normal dengan kolom lain
                             row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
                             tableBody.appendChild(row);
                         }
@@ -814,7 +810,7 @@
 
         function loadTAHistory(nrpUser) {
             const tableBody = document.querySelector('#ta-table tbody');
-            tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komponen...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komplain...</td></tr>`;
 
             fetch(scriptUrl, {
                 method: "POST",
