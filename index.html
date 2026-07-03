@@ -463,7 +463,7 @@
 
             <div id="sec-daily-activity" class="content-section">
                 <h2>Form Daily Activity Report (DAR)</h2>
-                <p class="section-desc">Pencatatan laporan kegiatan harian siswa FMDP</p>
+                <p class="section-desc">Pencatatan laporan kegiatan harian siswa FMDP[cite: 1].</p>
                 
                 <form onsubmit="saveActivity(event)">
                     <div class="form-grid">
@@ -615,7 +615,7 @@
 
             <div id="sec-mentoring" class="content-section">
                 <h2>Form Mentoring Portal</h2>
-                <p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p>
+                <p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan[cite: 1].</p>
                 
                 <form onsubmit="saveMentoring(event)">
                     <div class="form-grid">
@@ -643,6 +643,11 @@
                             <label>Nilai / Target Kelulusan (%)</label>
                             <input type="number" id="men-nilai" placeholder="Contoh: 85" min="0" max="100" required>
                         </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Upload Dokumentasi / Catatan</label>
+                            <input type="file" id="men-file" accept=".pdf,.jpg,.jpeg,.png,.docx" style="padding: 8px;">
+                            <small style="color:#7f8c8d; font-size:11px; display:block; margin-top:4px;">Format: PDF, Gambar, atau Word</small>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Detail Pembahasan Mentoring</label>
@@ -657,23 +662,24 @@
                     <table id="mentoring-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Instruktur / Mentor</th><th>Materi / Topik</th><th>Detail Pembahasan</th><th>Nilai / Target</th>
+                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Instruktur / Mentor</th><th>Materi / Topik</th><th>Detail Pembahasan</th><th>Nilai / Target</th><th>Dokumentasi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan.</td></tr>
+                            <tr><td colspan="8" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas.</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
-            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud.</p></div>
+            <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas[cite: 1].</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
+            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM)[cite: 1].</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud.</p></div>
 
         </div>
     </div>
 
     <script>
+        // LINK GOOGLE APPS SCRIPT WEB APP SUDAH TERPASANG DI SINI
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
         let globalNrp = "";
 
@@ -744,7 +750,7 @@
                 if (data.result === "success" && data.history.length > 0) {
                     data.history.forEach(item => {
                         const row = document.createElement('tr');
-                        row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                        row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td><strong>${item.waktuMulai}</strong></td><td><strong>${item.waktuSelesai}</strong></td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
                         tableBody.appendChild(row);
                     });
                 } else {
@@ -857,7 +863,7 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     taData.fileData = e.target.result;
-                    taData.fileName = `${taData.unit}_${Date.now()}_${file.name}`;
+                    taData.fileName = `${taData.unit}_TAR_${Date.now()}_${file.name}`;
                     taData.fileType = file.type;
                     kirimDataTA(taData, event.target, btnSubmit);
                 };
@@ -885,7 +891,7 @@
 
         function loadMentoringHistory(nrpUser) {
             const tableBody = document.querySelector('#mentoring-table tbody');
-            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mentoring...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mentoring...</td></tr>`;
 
             fetch(scriptUrl, {
                 method: "POST",
@@ -896,25 +902,30 @@
                 tableBody.innerHTML = "";
                 if (data.result === "success" && data.history.length > 0) {
                     data.history.forEach(item => {
+                        let linkDocHtml = (item.linkDokumen && item.linkDokumen !== "-") ? `<a href="${item.linkDokumen}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Catatan 🔗</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        
                         const row = document.createElement('tr');
-                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.instruktur}</td><td>${item.topik}</td><td>${item.pembahasan}</td><td><strong>${item.nilai}%</strong></td>`;
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.instruktur}</td><td>${item.topik}</td><td>${item.pembahasan}</td><td><strong>${item.nilai}%</strong></td><td>${linkDocHtml}</td>`;
                         tableBody.appendChild(row);
                     });
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat bimbingan mentoring.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat bimbingan mentoring.</td></tr>`;
                 }
             })
             .catch(error => {
-                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat tabel mentoring.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat tabel mentoring.</td></tr>`;
             });
         }
 
         function saveMentoring(event) {
             event.preventDefault();
             const btnSubmit = event.target.querySelector('.btn-submit');
-            btnSubmit.innerText = "Menyimpan Data..."; btnSubmit.disabled = true;
+            btnSubmit.innerText = "Menyimpan Data Bimbingan..."; btnSubmit.disabled = true;
 
-            const formData = {
+            const fileInput = document.getElementById('men-file');
+            const file = fileInput.files[0];
+
+            const mentoringData = {
                 action: "saveMentoring",
                 nama: document.getElementById('men-nama').value,
                 nrp: document.getElementById('men-nrp').value,
@@ -922,18 +933,34 @@
                 instruktur: document.getElementById('men-instruktur').value,
                 topik: document.getElementById('men-topik').value,
                 nilai: document.getElementById('men-nilai').value,
-                pembahasan: document.getElementById('men-pembahasan').value
+                pembahasan: document.getElementById('men-pembahasan').value,
+                fileData: "", fileName: "", fileType: ""
             };
 
-            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mentoringData.fileData = e.target.result;
+                    mentoringData.fileName = `${mentoringData.nrp}_MENTORING_${Date.now()}_${file.name}`;
+                    mentoringData.fileType = file.type;
+                    kirimDataMentoring(mentoringData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataMentoring(mentoringData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataMentoring(mentoringData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(mentoringData) })
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Sukses: Data mentoring disimpan!");
-                    loadMentoringHistory(formData.nrp);
-                    event.target.reset();
-                    document.getElementById('men-nama').value = formData.nama;
-                    document.getElementById('men-nrp').value = formData.nrp;
+                    alert("Sukses: Data mentoring & lampiran berkas berhasil disimpan!");
+                    loadMentoringHistory(mentoringData.nrp);
+                    formElement.reset();
+                    document.getElementById('men-nama').value = mentoringData.nama;
+                    document.getElementById('men-nrp').value = mentoringData.nrp;
                 } else { alert("Gagal: " + data.error); }
             })
             .catch(error => alert("Koneksi gagal saat menyimpan data mentoring."))
