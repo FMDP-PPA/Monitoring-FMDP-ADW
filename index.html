@@ -502,7 +502,8 @@
 
             <div id="sec-daily-activity" class="content-section">
                 <h2>Form Daily Activity (DAR)</h2>
-                <p class="section-desc">Pencatatan rekam aktivitas kerja personil harian secara akurat.</p>
+                <!-- POIN 1: Perubahan Deskripsi Sub-Header -->
+                <p class="section-desc">Pencatatan laporan kegiatan harian siswa FMDP</p>
                 
                 <form onsubmit="saveActivity(event)">
                     <div class="form-grid">
@@ -515,11 +516,13 @@
                             <input type="text" id="act-nrp" readonly placeholder="Terbaca otomatis">
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Kerja</label>
+                            <!-- POIN 2: Perubahan Label Tanggal Pekerjaan -->
+                            <label>Tanggal Pekerjaan</label>
                             <input type="date" id="act-tanggal" required>
                         </div>
                         <div class="form-group">
-                            <label>Waktu Operasional</label>
+                            <!-- POIN 3: Perubahan Label Waktu Pekerjaan -->
+                            <label>Waktu Pekerjaan</label>
                             <div class="time-grid">
                                 <input type="time" id="act-waktu-mulai" title="Jam Mulai" required>
                                 <input type="time" id="act-waktu-selesai" title="Jam Selesai" required>
@@ -530,7 +533,8 @@
                             <input type="text" id="act-unit" placeholder="Isikan kode unit atau ketik 'Non-Unit'" required>
                         </div>
                         <div class="form-group">
-                            <label>Durasi Tugas (Menit)</label>
+                            <!-- POIN 4: Perubahan Label Durasi Pekerjaan -->
+                            <label>Durasi Pekerjaan (Menit)</label>
                             <input type="number" id="act-durasi" placeholder="Misal: 60, 120" min="1" required>
                         </div>
                     </div>
@@ -550,7 +554,8 @@
 
                 <div class="table-responsive">
                     <h3>Daftar Riwayat Aktivitas Anda</h3>
-                    <p class="table-info-text">Menampilkan laporan saringan khusus pekan ini berjalan (Senin s.d. Minggu)</p>
+                    <!-- POIN 5: Perubahan Deskripsi Atas Tabel -->
+                    <p class="table-info-text">Menampilkan laporan aktifitas minggu ini (Senin s.d. Minggu)</p>
                     <table id="activity-table">
                         <thead>
                             <tr>
@@ -758,7 +763,9 @@
                         if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
                             adaDataPekanIni = true;
                             const row = document.createElement('tr');
-                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td><span style="color:#d61c22; font-weight:600;">${item.unit}</span></td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                            
+                            // POIN 6: Warna merah (style="color:#d61c22; font-weight:600;") pada item.unit sudah dihapus, disamakan normal dengan kolom lain
+                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
                             tableBody.appendChild(row);
                         }
                     });
