@@ -445,12 +445,8 @@
         .badge-progress { background-color: #dff9fb; color: #0984e3; }
         .badge-closed { background-color: #e2f7ce; color: #27ae60; }
         
-        /* Badge Tambahan untuk Klasifikasi Breakdown */
         .badge-bd-schedule { background-color: #ffcccc; color: #c0392b; }
         .badge-bd-unschedule { background-color: #d4efdf; color: #27ae60; }
-
-        /* Badge Tambahan Nilai Mentoring */
-        .badge-score { background-color: #e8f4fd; color: #0984e3; border: 1px solid #74b9ff; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -558,7 +554,7 @@
                     <table id="activity-table">
                         <thead>
                             <tr>
-                                <th>Nama</th><th>NRP</th><th>Tanggal</th><th>Mulai</th><th>Selesai</th><th>Unit</th><th>Aktivitas Kerja</th><th>Durasi</th><th>Keterangan</th>
+                                <th>Tanggal</th><th>Nama</th><th>NRP</th><th>Mulai</th><th>Selesai</th><th>Unit</th><th>Aktivitas Kerja</th><th>Durasi</th><th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -670,10 +666,12 @@
                 </div>
             </div>
 
-            <!-- HALAMAN BARU: MENU MENTORING -->
+            <!-- ========================================== -->
+            <!-- MENU MENTORING YANG SUDAH JADI FORM ELEGAN -->
+            <!-- ========================================== -->
             <div id="sec-mentoring" class="content-section">
                 <h2>Form Mentoring Portal</h2>
-                <p class="section-desc">Pencatatan evaluasi bimbingan intensif dan pencapaian target siswa FMDP</p>
+                <p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p>
                 
                 <form onsubmit="saveMentoring(event)">
                     <div class="form-grid">
@@ -686,53 +684,40 @@
                             <input type="text" id="men-nrp" readonly placeholder="Terbaca otomatis">
                         </div>
                         <div class="form-group">
-                            <label>Tanggal Mentoring</label>
+                            <label>Tanggal Bimbingan</label>
                             <input type="date" id="men-tanggal" required>
                         </div>
                         <div class="form-group">
-                            <label>Nama Instruktur / Mentor</label>
-                            <input type="text" id="men-instruktur" placeholder="Masukkan nama instruktur bimbingan" required>
+                            <label>Instruktur / Mentor</label>
+                            <input type="text" id="men-instruktur" placeholder="Nama Instruktur PPD" required>
                         </div>
                         <div class="form-group">
-                            <label>Materi / Topik Mentoring</label>
-                            <input type="text" id="men-topik" placeholder="Contoh: Overhaul Engine, Basic Hydraulic, Leadership" required>
+                            <label>Materi / Topik Utama</label>
+                            <input type="text" id="men-topik" placeholder="Contoh: Overhaul Engine, Troubleshooting Electrical" required>
                         </div>
                         <div class="form-group">
-                            <label>Nilai / Pencapaian Target Bimbingan</label>
-                            <select id="men-nilai" required>
-                                <option value="" disabled selected>-- Pilih Pencapaian --</option>
-                                <option value="A (Sangat Baik / Tuntas)">A (Sangat Baik / Tuntas)</option>
-                                <option value="B (Baik / Perlu Penguatan)">B (Baik / Perlu Penguatan)</option>
-                                <option value="C (Cukup / Perlu Bimbingan Ulang)">C (Cukup / Perlu Bimbingan Ulang)</option>
-                            </select>
+                            <label>Nilai / Target Kelulusan (%)</label>
+                            <input type="number" id="men-nilai" placeholder="Contoh: 85, 90" min="0" max="100" required>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label>Detail Pembahasan & Catatan Progress (Symptom/Catatan Lapangan)</label>
-                        <textarea id="men-pembahasan" rows="4" placeholder="Tuliskan poin penting pembahasan bimbingan teknis serta tingkat pemahaman siswa..." required></textarea>
+                        <label>Detail Pembahasan Mentoring</label>
+                        <textarea id="men-pembahasan" rows="3" placeholder="Tulis poin penting bimbingan atau catatan evaluasi..." required></textarea>
                     </div>
-
                     <button type="submit" class="btn-submit">Simpan Data Mentoring</button>
                 </form>
 
                 <div class="table-responsive">
-                    <h3>Riwayat Laporan Mentoring Karyawan</h3>
-                    <p class="table-info-text">Menampilkan seluruh riwayat pencapaian target dan bimbingan tanpa batasan waktu</p>
+                    <h3>Riwayat Evaluasi Mentoring Anda</h3>
+                    <p class="table-info-text">Daftar rekam bimbingan intensif terdaftar</p>
                     <table id="mentoring-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Nama Karyawan</th>
-                                <th>NRP</th>
-                                <th>Instruktur / Mentor</th>
-                                <th>Materi / Topik</th>
-                                <th>Detail Pembahasan</th>
-                                <th>Nilai / Target</th>
+                                <th>Tanggal</th><th>Nama</th><th>NRP</th><th>Mentor</th><th>Topik Materi</th><th>Detail Pembahasan</th><th>Nilai</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat mentoring yang dimuat.</td></tr>
+                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan yang terekam.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -777,7 +762,6 @@
                     document.getElementById('ta-nama').value = data.nama;
                     document.getElementById('ta-nrp').value = data.nrp;
 
-                    // Mengisi info otomatis halaman Mentoring
                     document.getElementById('men-nama').value = data.nama;
                     document.getElementById('men-nrp').value = data.nrp;
 
@@ -786,7 +770,7 @@
 
                     loadActivityHistory(data.nrp);
                     loadTAHistory(data.nrp);
-                    loadMentoringHistory(data.nrp); // Muat riwayat mentoring saat login
+                    loadMentoringHistory(data.nrp);
                 } else {
                     alert(data.message);
                 }
@@ -805,17 +789,6 @@
             const tableBody = document.querySelector('#activity-table tbody');
             tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
 
-            const sekarang = new Date();
-            const hariSekarang = grandparents = sekarang.getDay();
-            const jarakKeSenin = hariSekarang === 0 ? -6 : 1 - hariSekarang;
-            const seninPekanIni = new Date(sekarang);
-            seninPekanIni.setDate(sekarang.getDate() + jarakKeSenin);
-            seninPekanIni.setHours(0, 0, 0, 0);
-
-            const mingguPekanIni = new Date(seninPekanIni);
-            mingguPekanIni.setDate(seninPekanIni.getDate() + 6);
-            mingguPekanIni.setHours(23, 59, 59, 999);
-
             fetch(scriptUrl, {
                 method: "POST",
                 body: JSON.stringify({ action: "getHistory", nrp: nrpUser })
@@ -824,21 +797,11 @@
             .then(data => {
                 tableBody.innerHTML = "";
                 if (data.result === "success" && data.history.length > 0) {
-                    let adaDataPekanIni = false;
                     data.history.forEach(item => {
-                        const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
-                        let tanggalAktivitas = item.tanggal.includes('-') ? 
-                            new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
-                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
-
-                        if (tanggalAktivitas >= seninPekanIni && tanggalAktivitas <= mingguPekanIni) {
-                            adaDataPekanIni = true;
-                            const row = document.createElement('tr');
-                            row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.tanggal}</strong></td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
-                            tableBody.appendChild(row);
-                        }
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.waktuMulai}</td><td>${item.waktuSelesai}</td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                        tableBody.appendChild(row);
                     });
-                    if (!adaDataPekanIni) tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Tidak ditemukan rekam aktivitas kerja untuk pekan ini.</td></tr>`;
                 } else {
                     tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas terdaftar.</td></tr>`;
                 }
@@ -885,10 +848,6 @@
             const tableBody = document.querySelector('#ta-table tbody');
             tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komplain...</td></tr>`;
 
-            const sekarang = new Date();
-            const bulanSekarang = sekarang.getMonth(); 
-            const tahunSekarang = sekarang.getFullYear();
-
             fetch(scriptUrl, {
                 method: "POST",
                 body: JSON.stringify({ action: "getTAHistory", nrp: nrpUser })
@@ -897,50 +856,33 @@
             .then(data => {
                 tableBody.innerHTML = "";
                 if (data.result === "success" && data.history.length > 0) {
-                    let adaDataBulanIni = false;
                     data.history.forEach(item => {
-                        const bagianTanggal = item.tanggal.includes('-') ? item.tanggal.split('-') : item.tanggal.split('/');
-                        let tanggalTA = item.tanggal.includes('-') ? 
-                            new Date(bagianTanggal[0], bagianTanggal[1] - 1, bagianTanggal[2]) : 
-                            new Date(bagianTanggal[2], bagianTanggal[1] - 1, bagianTanggal[0]);
+                        let statusClass = "badge-open";
+                        if(item.status === "On Progress") statusClass = "badge-progress";
+                        if(item.status === "Closed") statusClass = "badge-closed";
 
-                        if (tanggalTA.getMonth() === bulanSekarang && tanggalTA.getFullYear() === tahunSekarang) {
-                            adaDataBulanIni = true;
-                            
-                            let statusClass = "badge-open";
-                            if(item.status === "On Progress") statusClass = "badge-progress";
-                            if(item.status === "Closed") statusClass = "badge-closed";
-
-                            let bdClass = "";
-                            if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("unschedule")) {
-                                bdClass = "badge-bd-unschedule";
-                            } else if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("schedule")) {
-                                bdClass = "badge-bd-schedule";
-                            }
-
-                            let linkHtml = "<span style='color:#a4b0be;'>Tidak ada</span>";
-                            if(item.linkLampiran && item.linkLampiran !== "-") {
-                                linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; text-decoration:none; font-weight:600; display:inline-block; border-bottom:1px dashed #0d2040;">Lihat Foto 🔗</a>`;
-                            }
-
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${item.tanggal}</td>
-                                <td><strong>${item.unit}</strong></td>
-                                <td><span class="badge ${bdClass}">${item.jenisBreakdown}</span></td>
-                                <td>${item.komponen}</td>
-                                <td>${item.symptom}</td>
-                                <td>${item.rootCause}</td>
-                                <td>${item.perbaikan}</td>
-                                <td>${item.pencegahan}</td>
-                                <td>${linkHtml}</td>
-                                <td><span class="badge ${statusClass}">${item.status}</span></td>
-                                <td><em>${item.namaPengawas}</em></td>
-                            `;
-                            tableBody.appendChild(row);
+                        let bdClass = "";
+                        if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("unschedule")) {
+                            bdClass = "badge-bd-unschedule";
+                        } else if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("schedule")) {
+                            bdClass = "badge-bd-schedule";
                         }
+
+                        let linkHtml = "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        if(item.linkLampiran && item.linkLampiran !== "-") {
+                            linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; text-decoration:none; font-weight:600;">Lihat Foto 🔗</a>`;
+                        }
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.tanggal}</td><td><strong>${item.unit}</strong></td>
+                            <td><span class="badge ${bdClass}">${item.jenisBreakdown}</span></td>
+                            <td>${item.komponen}</td><td>${item.symptom}</td><td>${item.rootCause}</td>
+                            <td>${item.perbaikan}</td><td>${item.pencegahan}</td><td>${linkHtml}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td><td><em>${item.namaPengawas}</em></td>
+                        `;
+                        tableBody.appendChild(row);
                     });
-                    if (!adaDataBulanIni) tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Tidak ditemukan laporan analisa teknik untuk bulan ini.</td></tr>`;
                 } else {
                     tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis tersimpan.</td></tr>`;
                 }
@@ -972,9 +914,7 @@
                 perbaikan: document.getElementById('ta-perbaikan').value,
                 pencegahan: document.getElementById('ta-pencegahan').value,
                 namaPengawas: document.getElementById('ta-pengawas').value,
-                fileData: "",
-                fileName: "",
-                fileType: ""
+                fileData: "", fileName: "", fileType: ""
             };
 
             if (file) {
@@ -1003,14 +943,16 @@
                     document.getElementById('ta-nrp').value = taData.nrp;
                 } else { alert("Gagal Simpan Laporan: " + data.error); }
             })
-            .catch(error => alert("Gagal mengunggah lampiran foto akibat limitasi timeout koneksi luar."))
+            .catch(error => alert("Gagal mengunggah laporan teknis."))
             .finally(() => { btnSubmit.innerText = "Simpan Laporan Teknis"; btnSubmit.disabled = false; });
         }
 
-        /* --- FUNGSI BARU: MODUL MENTORING --- */
+        // ==========================================
+        // FUNGSI UNTUK MENU MENTORING (SIMPAN & MUAT)
+        // ==========================================
         function loadMentoringHistory(nrpUser) {
             const tableBody = document.querySelector('#mentoring-table tbody');
-            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat data bimbingan...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mentoring...</td></tr>`;
 
             fetch(scriptUrl, {
                 method: "POST",
@@ -1022,32 +964,24 @@
                 if (data.result === "success" && data.history.length > 0) {
                     data.history.forEach(item => {
                         const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td><strong>${item.tanggal}</strong></td>
-                            <td>${item.nama}</td>
-                            <td>${item.nrp}</td>
-                            <td><em>${item.instruktur}</em></td>
-                            <td>${item.topik}</td>
-                            <td>${item.pembahasan}</td>
-                            <td><span class="badge badge-score">${item.nilai}</span></td>
-                        `;
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.instruktur}</td><td>${item.topik}</td><td>${item.pembahasan}</td><td><strong>${item.nilai}%</strong></td>`;
                         tableBody.appendChild(row);
                     });
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat mentoring terdaftar.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat bimbingan mentoring.</td></tr>`;
                 }
             })
             .catch(error => {
-                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi lembar data mentoring.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat tabel mentoring.</td></tr>`;
             });
         }
 
         function saveMentoring(event) {
             event.preventDefault();
             const btnSubmit = event.target.querySelector('.btn-submit');
-            btnSubmit.innerText = "Mengunci Data Mentoring..."; btnSubmit.disabled = true;
+            btnSubmit.innerText = "Menyimpan Data..."; btnSubmit.disabled = true;
 
-            const mentoringData = {
+            const formData = {
                 action: "saveMentoring",
                 nama: document.getElementById('men-nama').value,
                 nrp: document.getElementById('men-nrp').value,
@@ -1058,18 +992,18 @@
                 pembahasan: document.getElementById('men-pembahasan').value
             };
 
-            fetch(scriptUrl, { method: "POST", body: JSON.stringify(mentoringData) })
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
                     alert("Sukses: Data bimbingan mentoring berhasil disimpan!");
-                    loadMentoringHistory(mentoringData.nrp);
+                    loadMentoringHistory(formData.nrp);
                     event.target.reset();
-                    document.getElementById('men-nama').value = mentoringData.nama;
-                    document.getElementById('men-nrp').value = mentoringData.nrp;
-                } else { alert("Gagal Menyimpan: " + data.error); }
+                    document.getElementById('men-nama').value = formData.nama;
+                    document.getElementById('men-nrp').value = formData.nrp;
+                } else { alert("Gagal Simpan: " + data.error); }
             })
-            .catch(error => alert("Gangguan server, gagal mengamankan data bimbingan."))
+            .catch(error => alert("Koneksi gagal saat menyimpan data mentoring."))
             .finally(() => { btnSubmit.innerText = "Simpan Data Mentoring"; btnSubmit.disabled = false; });
         }
 
