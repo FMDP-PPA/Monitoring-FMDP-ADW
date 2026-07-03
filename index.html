@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Aplikasi Internal - Plant People Development</title>
     <style>
-        /* --- RESET & BASE STYLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +20,6 @@
             min-height: 100vh;
         }
 
-        /* --- 1. GAYA HALAMAN LOGIN PREMIUM (TEMA PPA SITE ADW) --- */
         .login-wrapper {
             display: flex;
             justify-content: center;
@@ -143,7 +141,6 @@
             transform: none;
         }
 
-        /* --- 2. NAVBAR NAVIGATION (PPD NAV) --- */
         #main-application {
             display: none;
         }
@@ -248,7 +245,6 @@
             border-color: #d61c22;
         }
 
-        /* --- 3. LAYOUT CONTAINER & LAYOUT PANEL --- */
         .container {
             max-width: 1280px;
             margin: 30px auto;
@@ -314,42 +310,17 @@
         }
 
         @media (max-width: 992px) {
-            .navbar {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-                gap: 15px;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                height: auto;
-                gap: 5px;
-            }
-            .nav-links a {
-                padding: 8px 12px;
-                border-radius: 4px;
-            }
-            .nav-links a.active {
-                background-color: #d61c22;
-            }
-            .login-wrapper {
-                flex-direction: column;
-                justify-content: center;
-            }
+            .navbar { flex-direction: column; height: auto; padding: 15px; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; height: auto; gap: 5px; }
+            .nav-links a { padding: 8px 12px; border-radius: 4px; }
+            .nav-links a.active { background-color: #d61c22; }
+            .login-wrapper { flex-direction: column; justify-content: center; }
         }
 
         @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                margin: 15px auto;
-                padding: 0 12px;
-            }
-            .content-section {
-                padding: 20px;
-            }
+            .form-grid { grid-template-columns: 1fr; }
+            .container { margin: 15px auto; padding: 0 12px; }
+            .content-section { padding: 20px; }
         }
 
         .btn-submit {
@@ -371,7 +342,6 @@
             box-shadow: 0 5px 10px rgba(214, 28, 34, 0.3);
         }
 
-        /* --- 4. DATA TABLE STYLING --- */
         .table-responsive {
             overflow-x: auto;
             margin-top: 35px;
@@ -419,17 +389,9 @@
             line-height: 1.4;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fafbfc;
-        }
-
-        tbody tr:hover {
-            background-color: #f1f2f6;
-        }
+        tr:last-child td { border-bottom: none; }
+        tbody tr:nth-child(even) { background-color: #fafbfc; }
+        tbody tr:hover { background-color: #f1f2f6; }
 
         .badge {
             padding: 5px 10px;
@@ -444,7 +406,6 @@
         .badge-open { background-color: #ffeaa7; color: #d63031; }
         .badge-progress { background-color: #dff9fb; color: #0984e3; }
         .badge-closed { background-color: #e2f7ce; color: #27ae60; }
-        
         .badge-bd-schedule { background-color: #ffcccc; color: #c0392b; }
         .badge-bd-unschedule { background-color: #d4efdf; color: #27ae60; }
     </style>
@@ -496,7 +457,7 @@
             <div id="sec-beranda" class="content-section active">
                 <div class="welcome-box">
                     <h1>Selamat Datang, <span id="user-display-name">User</span>!</h1>
-                    <p style="margin-top: 8px; color: #57606f; font-size: 14px;">Koneksi ke basis data cloud terhubung sempurna. Gunakan bar navigasi di bagian atas untuk mulai mencatat aktivitas harian Anda atau mengisi formulir kerusakan unit lapangan.</p>
+                    <p style="margin-top: 8px; color: #57606f; font-size: 14px;">Koneksi ke basis data cloud terhubung sempurna. Gunakan bar navigasi di bagian atas untuk mulai mencatat aktivitas harian Anda atau mengisi formulir bimbingan.</p>
                 </div>
             </div>
 
@@ -508,11 +469,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nama Karyawan</label>
-                            <input type="text" id="act-nama" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="act-nama" readonly>
                         </div>
                         <div class="form-group">
                             <label>NRP / ID</label>
-                            <input type="text" id="act-nrp" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="act-nrp" readonly>
                         </div>
                         <div class="form-group">
                             <label>Tanggal Pekerjaan</label>
@@ -521,13 +482,13 @@
                         <div class="form-group">
                             <label>Waktu Pekerjaan</label>
                             <div class="time-grid">
-                                <input type="time" id="act-waktu-mulai" title="Jam Mulai" required>
-                                <input type="time" id="act-waktu-selesai" title="Jam Selesai" required>
+                                <input type="time" id="act-waktu-mulai" required>
+                                <input type="time" id="act-waktu-selesai" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Nomor Lambung Unit (CN)</label>
-                            <input type="text" id="act-unit" placeholder="Isikan kode unit atau ketik 'Non-Unit'" required>
+                            <input type="text" id="act-unit" placeholder="Isikan kode unit atau 'Non-Unit'" required>
                         </div>
                         <div class="form-group">
                             <label>Durasi Pekerjaan (Menit)</label>
@@ -537,12 +498,11 @@
                     
                     <div class="form-group">
                         <label>Rincian Aktivitas (Activity)</label>
-                        <textarea id="act-activity" rows="3" placeholder="Tuliskan tugas yang diselesaikan dengan detail..." required></textarea>
+                        <textarea id="act-activity" rows="3" placeholder="Tuliskan rincian tugas harian..." required></textarea>
                     </div>
-
                     <div class="form-group">
                         <label>Keterangan Tambahan (Opsional)</label>
-                        <textarea id="act-keterangan" rows="2" placeholder="Catatan atau hambatan lapangan jika ada..."></textarea>
+                        <textarea id="act-keterangan" rows="2" placeholder="Catatan lapangan tambahan..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">Simpan Aktivitas</button>
@@ -550,7 +510,7 @@
 
                 <div class="table-responsive">
                     <h3>Daftar Riwayat Aktivitas Anda</h3>
-                    <p class="table-info-text">Menampilkan laporan aktifitas minggu ini (Senin s.d. Minggu)</p>
+                    <p class="table-info-text">Menampilkan laporan aktivitas terdaftar pada database</p>
                     <table id="activity-table">
                         <thead>
                             <tr>
@@ -572,11 +532,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nama Karyawan</label>
-                            <input type="text" id="ta-nama" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="ta-nama" readonly>
                         </div>
                         <div class="form-group">
                             <label>NRP / ID</label>
-                            <input type="text" id="ta-nrp" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="ta-nrp" readonly>
                         </div>
                         <div class="form-group">
                             <label>Tanggal Pekerjaan</label>
@@ -584,7 +544,7 @@
                         </div>
                         <div class="form-group">
                             <label>Nomor Lambung Unit (CN)</label>
-                            <input type="text" id="ta-unit" placeholder="Contoh: CN201, EX300" required>
+                            <input type="text" id="ta-unit" placeholder="Contoh: CN201" required>
                         </div>
                         <div class="form-group">
                             <label>Jenis Breakdown</label>
@@ -596,15 +556,15 @@
                         </div>
                         <div class="form-group">
                             <label>Sistem / Komponen Utama</label>
-                            <input type="text" id="ta-komponen" placeholder="Contoh: Engine, Hydraulic System, Final Drive" required>
+                            <input type="text" id="ta-komponen" placeholder="Contoh: Engine, Hydraulic" required>
                         </div>
                         <div class="form-group">
                             <label>Status Perbaikan Unit</label>
                             <select id="ta-status" required>
                                 <option value="" disabled selected>-- Pilih Status Unit --</option>
                                 <option value="Open">Open (Pending)</option>
-                                <option value="On Progress">On Progress (Dikerjakan)</option>
-                                <option value="Closed">Closed (Selesai RFU)</option>
+                                <option value="On Progress">On Progress</option>
+                                <option value="Closed">Closed (RFU)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -613,28 +573,25 @@
                         </div>
                         <div class="form-group" style="grid-column: span 2;">
                             <label>Nama Pengawas Lapangan</label>
-                            <input type="text" id="ta-pengawas" placeholder="Masukkan nama penanggung jawab / pengawas" required>
+                            <input type="text" id="ta-pengawas" placeholder="Masukkan nama pengawas" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>Gejala Fisik / Masalah Awal (Symptom)</label>
-                        <textarea id="ta-symptom" rows="2" placeholder="Tuliskan keluhan operator atau indikasi kerusakan luar..." required></textarea>
+                        <textarea id="ta-symptom" rows="2" required></textarea>
                     </div>
-
                     <div class="form-group">
                         <label>Analisa Akar Masalah (Root Cause Analysis)</label>
-                        <textarea id="ta-rootcause" rows="2" placeholder="Hasil investigasi kerusakan teknis mendalam penyebab kegagalan..." required></textarea>
+                        <textarea id="ta-rootcause" rows="2" required></textarea>
                     </div>
-
                     <div class="form-group">
                         <label>Tindakan Korektif (Perbaikan)</label>
-                        <textarea id="ta-perbaikan" rows="2" placeholder="Langkah penanganan mekanik yang sudah dieksekusi..." required></textarea>
+                        <textarea id="ta-perbaikan" rows="2" required></textarea>
                     </div>
-
                     <div class="form-group">
                         <label>Rekomendasi / Langkah Pencegahan</label>
-                        <textarea id="ta-pencegahan" rows="2" placeholder="Langkah mitigasi ke depan agar kendala serupa tidak terulang kembali..." required></textarea>
+                        <textarea id="ta-pencegahan" rows="2" required></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">Simpan Laporan Teknis</button>
@@ -642,33 +599,20 @@
 
                 <div class="table-responsive">
                     <h3>Riwayat Laporan Analisa Teknik Anda</h3>
-                    <p class="table-info-text">Menampilkan laporan analisa teknik selama 1 bulan</p>
+                    <p class="table-info-text">Daftar arsip penanganan kerusakan unit</p>
                     <table id="ta-table">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
-                                <th>Unit CN</th>
-                                <th>Breakdown</th>
-                                <th>Komponen</th>
-                                <th>Gejala</th>
-                                <th>Analisa Kerusakan</th>
-                                <th>Perbaikan</th>
-                                <th>Pencegahan</th>
-                                <th>Foto Lampiran</th>
-                                <th>Status</th>
-                                <th>Pengawas</th>
+                                <th>Tanggal</th><th>Unit CN</th><th>Breakdown</th><th>Komponen</th><th>Gejala</th><th>Analisa Kerusakan</th><th>Perbaikan</th><th>Pencegahan</th><th>Foto Lampiran</th><th>Status</th><th>Pengawas</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="11" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data yang masuk.</td></tr>
+                            <tr><td colspan="11" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- MENU MENTORING YANG SUDAH JADI FORM ELEGAN -->
-            <!-- ========================================== -->
             <div id="sec-mentoring" class="content-section">
                 <h2>Form Mentoring Portal</h2>
                 <p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p>
@@ -677,11 +621,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nama Karyawan</label>
-                            <input type="text" id="men-nama" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="men-nama" readonly>
                         </div>
                         <div class="form-group">
                             <label>NRP / ID</label>
-                            <input type="text" id="men-nrp" readonly placeholder="Terbaca otomatis">
+                            <input type="text" id="men-nrp" readonly>
                         </div>
                         <div class="form-group">
                             <label>Tanggal Bimbingan</label>
@@ -693,23 +637,23 @@
                         </div>
                         <div class="form-group">
                             <label>Materi / Topik Utama</label>
-                            <input type="text" id="men-topik" placeholder="Contoh: Overhaul Engine, Troubleshooting Electrical" required>
+                            <input type="text" id="men-topik" placeholder="Topik bimbingan" required>
                         </div>
                         <div class="form-group">
                             <label>Nilai / Target Kelulusan (%)</label>
-                            <input type="number" id="men-nilai" placeholder="Contoh: 85, 90" min="0" max="100" required>
+                            <input type="number" id="men-nilai" placeholder="Contoh: 85" min="0" max="100" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Detail Pembahasan Mentoring</label>
-                        <textarea id="men-pembahasan" rows="3" placeholder="Tulis poin penting bimbingan atau catatan evaluasi..." required></textarea>
+                        <textarea id="men-pembahasan" rows="3" placeholder="Poin penting bimbingan..." required></textarea>
                     </div>
                     <button type="submit" class="btn-submit">Simpan Data Mentoring</button>
                 </form>
 
                 <div class="table-responsive">
                     <h3>Riwayat Evaluasi Mentoring Anda</h3>
-                    <p class="table-info-text">Daftar rekam bimbingan intensif terdaftar</p>
+                    <p class="table-info-text">Daftar rekam bimbingan internal</p>
                     <table id="mentoring-table">
                         <thead>
                             <tr>
@@ -717,19 +661,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan yang terekam.</td></tr>
+                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas.</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
-            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud aplikasi.</p></div>
+            <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud.</p></div>
 
         </div>
     </div>
 
     <script>
+        // ISI URL WEB APP APPS SCRIPT ANDA DI SINI
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
         let globalNrp = "";
 
@@ -738,7 +683,7 @@
             const passInp = document.getElementById('password').value;
 
             if(!userInp || !passInp) {
-                alert("Username dan Password wajib diisi lengkap!");
+                alert("Username dan Password wajib diisi!");
                 return;
             }
 
@@ -754,6 +699,8 @@
             .then(data => {
                 if (data.result === "success") {
                     globalNrp = data.nrp;
+                    
+                    // SINKRONISASI ELEMEN (MENCEGAH SALAH INDEKS NAMA/NRP)
                     document.getElementById('user-display-name').innerText = data.nama;
                     
                     document.getElementById('act-nama').value = data.nama;
@@ -776,8 +723,8 @@
                 }
             })
             .catch(error => {
-                console.error("Error Login:", error);
-                alert("Gagal menghubungi server basis data.");
+                console.error(error);
+                alert("Gagal terhubung ke basis data server.");
             })
             .finally(() => {
                 btnLogin.innerText = "Masuk Portal";
@@ -807,7 +754,7 @@
                 }
             })
             .catch(error => {
-                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ea2027; padding: 25px;">Koneksi terputus saat memuat lembar DAR.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat lembar DAR.</td></tr>`;
             });
         }
 
@@ -833,14 +780,14 @@
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Sukses: Aktivitas harian masuk spreadsheet cloud!");
+                    alert("Sukses: Aktivitas harian tersimpan!");
                     loadActivityHistory(formData.nrp);
                     event.target.reset();
                     document.getElementById('act-nama').value = formData.nama;
                     document.getElementById('act-nrp').value = formData.nrp;
-                } else { alert("Eror Sistem: " + data.error); }
+                } else { alert("Error: " + data.error); }
             })
-            .catch(error => alert("Gagal mengamankan data akibat gangguan jaringan."))
+            .catch(error => alert("Gagal mengirim data."))
             .finally(() => { btnSubmit.innerText = "Simpan Aktivitas"; btnSubmit.disabled = false; });
         }
 
@@ -861,17 +808,8 @@
                         if(item.status === "On Progress") statusClass = "badge-progress";
                         if(item.status === "Closed") statusClass = "badge-closed";
 
-                        let bdClass = "";
-                        if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("unschedule")) {
-                            bdClass = "badge-bd-unschedule";
-                        } else if(item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("schedule")) {
-                            bdClass = "badge-bd-schedule";
-                        }
-
-                        let linkHtml = "<span style='color:#a4b0be;'>Tidak ada</span>";
-                        if(item.linkLampiran && item.linkLampiran !== "-") {
-                            linkHtml = `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; text-decoration:none; font-weight:600;">Lihat Foto 🔗</a>`;
-                        }
+                        let bdClass = (item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("unschedule")) ? "badge-bd-unschedule" : "badge-bd-schedule";
+                        let linkHtml = (item.linkLampiran && item.linkLampiran !== "-") ? `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Foto 🔗</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
 
                         const row = document.createElement('tr');
                         row.innerHTML = `
@@ -884,18 +822,18 @@
                         tableBody.appendChild(row);
                     });
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis tersimpan.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis.</td></tr>`;
                 }
             })
             .catch(error => {
-                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi data tabel papan pantau.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi tabel TAR.</td></tr>`;
             });
         }
 
         function saveTechnicalAnalysis(event) {
             event.preventDefault();
             const btnSubmit = event.target.querySelector('.btn-submit');
-            btnSubmit.innerText = "Mengompres & Mengunggah..."; btnSubmit.disabled = true;
+            btnSubmit.innerText = "Mengunggah Laporan..."; btnSubmit.disabled = true;
 
             const fileInput = document.getElementById('ta-file');
             const file = fileInput.files[0];
@@ -936,20 +874,17 @@
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Sukses: Dokumen analisis & lampiran foto terunggah total!");
+                    alert("Sukses: Dokumen TAR & lampiran foto terunggah!");
                     loadTAHistory(taData.nrp);
                     formElement.reset();
                     document.getElementById('ta-nama').value = taData.nama;
                     document.getElementById('ta-nrp').value = taData.nrp;
-                } else { alert("Gagal Simpan Laporan: " + data.error); }
+                } else { alert("Gagal: " + data.error); }
             })
             .catch(error => alert("Gagal mengunggah laporan teknis."))
             .finally(() => { btnSubmit.innerText = "Simpan Laporan Teknis"; btnSubmit.disabled = false; });
         }
 
-        // ==========================================
-        // FUNGSI UNTUK MENU MENTORING (SIMPAN & MUAT)
-        // ==========================================
         function loadMentoringHistory(nrpUser) {
             const tableBody = document.querySelector('#mentoring-table tbody');
             tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mentoring...</td></tr>`;
@@ -996,12 +931,12 @@
             .then(response => response.json())
             .then(data => {
                 if(data.result === "success") {
-                    alert("Sukses: Data bimbingan mentoring berhasil disimpan!");
+                    alert("Sukses: Data mentoring disimpan!");
                     loadMentoringHistory(formData.nrp);
                     event.target.reset();
                     document.getElementById('men-nama').value = formData.nama;
                     document.getElementById('men-nrp').value = formData.nrp;
-                } else { alert("Gagal Simpan: " + data.error); }
+                } else { alert("Gagal: " + data.error); }
             })
             .catch(error => alert("Koneksi gagal saat menyimpan data mentoring."))
             .finally(() => { btnSubmit.innerText = "Simpan Data Mentoring"; btnSubmit.disabled = false; });
