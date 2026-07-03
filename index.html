@@ -672,14 +672,68 @@
                 </div>
             </div>
 
-            <div id="sec-training" class="content-section"><h2>Training Portal</h2><p class="section-desc">Agenda pelatihan berkala sertifikasi mekanik dan penugasan kelas[cite: 1].</p><p style="color:#7f8c8d;">Jadwal training bulanan sedang dalam proses finalisasi data.</p></div>
+            <!-- MENU TRAINING TERBARU SESUAI KRITERIA BARU -->
+            <div id="sec-training" class="content-section">
+                <h2>Form Training Portal</h2>
+                <p class="section-desc">Pencatatan perkembangan harian agenda training karyawan[cite: 1].</p>
+                
+                <form onsubmit="saveTraining(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Karyawan</label>
+                            <input type="text" id="trn-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>NRP / ID</label>
+                            <input type="text" id="trn-nrp" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Training</label>
+                            <input type="date" id="trn-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Pelatihan / Training</label>
+                            <input type="text" id="trn-nama-pelatihan" placeholder="Contoh: Basic Mechanic Course" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hari Ke-</label>
+                            <input type="number" id="trn-hari-ke" placeholder="Contoh: 1, 2, 3" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dokumentasi Catatan</label>
+                            <input type="file" id="trn-file" accept=".pdf,.jpg,.jpeg,.png,.docx" style="padding: 8px;">
+                            <small style="color:#7f8c8d; font-size:11px; display:block; margin-top:4px;">Format berkas: Gambar, PDF, Word</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Topik Pembahasan</label>
+                        <textarea id="trn-topik" rows="3" placeholder="Tuliskan materi/topik pembahasan training pada hari ini..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Simpan Laporan Training</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Riwayat Log Pelatihan Training</h3>
+                    <p class="table-info-text">Daftar laporan harian training karyawan</p>
+                    <table id="training-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Nama Pelatihan</th><th>Hari Ke</th><th>Topik Pembahasan</th><th>Dokumentasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada data pelatihan terdaftar.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div id="sec-modul" class="content-section"><h2>Modul Center</h2><p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM)[cite: 1].</p><p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud.</p></div>
 
         </div>
     </div>
 
     <script>
-        // LINK GOOGLE APPS SCRIPT WEB APP SUDAH TERPASANG DI SINI
         const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
         let globalNrp = "";
 
@@ -716,12 +770,16 @@
                     document.getElementById('men-nama').value = data.nama;
                     document.getElementById('men-nrp').value = data.nrp;
 
+                    document.getElementById('trn-nama').value = data.nama;
+                    document.getElementById('trn-nrp').value = data.nrp;
+
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('main-application').style.display = 'block';
 
                     loadActivityHistory(data.nrp);
                     loadTAHistory(data.nrp);
                     loadMentoringHistory(data.nrp);
+                    loadTrainingHistory(data.nrp);
                 } else {
                     alert(data.message);
                 }
@@ -965,6 +1023,84 @@
             })
             .catch(error => alert("Koneksi gagal saat menyimpan data mentoring."))
             .finally(() => { btnSubmit.innerText = "Simpan Data Mentoring"; btnSubmit.disabled = false; });
+        }
+
+        // --- HAMPARAN FUNGSI BARU LOGIKA MENU TRAINING ---
+        function loadTrainingHistory(nrpUser) {
+            const tableBody = document.querySelector('#training-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat berkas training harian...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTrainingHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let linkDocHtml = (item.linkDokumen && item.linkDokumen !== "-") ? `<a href="${item.linkDokumen}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Catatan 🔗</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.namaTraining}</strong></td><td>Hari ke-${item.hariKe}</td><td>${item.topik}</td><td>${linkDocHtml}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas training harian.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat lembar monitoring training.</td></tr>`;
+            });
+        }
+
+        function saveTraining(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengamankan Berkas Lapangan..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('trn-file');
+            const file = fileInput.files[0];
+
+            const trainingData = {
+                action: "saveTraining",
+                nama: document.getElementById('trn-nama').value,
+                nrp: document.getElementById('trn-nrp').value,
+                tanggal: document.getElementById('trn-tanggal').value,
+                namaTraining: document.getElementById('trn-nama-pelatihan').value,
+                hariKe: document.getElementById('trn-hari-ke').value,
+                topik: document.getElementById('trn-topik').value,
+                fileData: "", fileName: "", fileType: ""
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    trainingData.fileData = e.target.result;
+                    trainingData.fileName = `${trainingData.nrp}_TRAINING_HARI_${trainingData.hariKe}_${Date.now()}_${file.name}`;
+                    trainingData.fileType = file.type;
+                    kirimDataTraining(trainingData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTraining(trainingData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataTraining(trainingData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(trainingData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Data harian log training berhasil ditambahkan ke database cloud!");
+                    loadTrainingHistory(trainingData.nrp);
+                    formElement.reset();
+                    document.getElementById('trn-nama').value = trainingData.nama;
+                    document.getElementById('trn-nrp').value = trainingData.nrp;
+                } else { alert("Gagal: " + data.error); }
+            })
+            .catch(error => alert("Koneksi gagal saat menyimpan log data training."))
+            .finally(() => { btnSubmit.innerText = "Simpan Laporan Training"; btnSubmit.disabled = false; });
         }
 
         function handleLogout(event) {
