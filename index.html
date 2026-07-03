@@ -1,246 +1,1332 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beranda - Plant People Development Portal</title>
-  <style>
-    /* Reset & Gaya Dasar Halaman */
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f4f6f9;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Aplikasi Internal - Plant People Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .welcome-section {
-      margin-bottom: 30px;
-      padding: 0 10px;
-    }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f6f8;
+            color: #1e272e;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    .welcome-section h2 {
-      margin: 0 0 5px 0;
-      color: #222;
-    }
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, #0d2040 0%, #d61c22 100%);
+            overflow: hidden;
+        }
 
-    .welcome-section p {
-      margin: 0;
-      color: #666;
-      font-size: 0.95rem;
-    }
+        .login-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            padding: 45px 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            border-top: 6px solid #d61c22;
+            position: relative;
+            z-index: 2;
+        }
 
-    /* Container Utama Kartu Dashboard */
-    .dashboard-container {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 10px;
-    }
+        .login-logo {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
-    /* Gaya Desain Kartu Statistik */
-    .stat-card {
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      padding: 24px;
-      text-align: center;
-      width: 220px;
-      transition: transform 0.2s ease;
-    }
+        .login-card h2 {
+            margin-bottom: 8px;
+            color: #0d2040;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
 
-    .stat-card:hover {
-      transform: translateY(-2px);
-    }
+        .login-card p {
+            color: #57606f;
+            font-size: 13.5px;
+            margin-bottom: 35px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
 
-    .stat-card h4 {
-      margin: 0 0 20px 0;
-      color: #444;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
+        .form-group {
+            margin-bottom: 22px;
+            text-align: left;
+        }
 
-    /* Wrapper untuk Animasi Lingkaran Progress (SVG) */
-    .progress-circle-wrapper {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 20px;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 12.5px;
+            color: #0d2040;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    .progress-circle-wrapper svg {
-      transform: rotate(-90deg); /* Memutar SVG agar lingkaran dimulai dari atas */
-    }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #dcdde1;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2c3e50;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+        }
 
-    .circle-bg {
-      fill: none;
-      stroke: #e6e6e6;
-      stroke-width: 10;
-    }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #d61c22;
+            box-shadow: 0 0 0 3px rgba(214, 28, 34, 0.15);
+        }
 
-    .circle-progress {
-      fill: none;
-      stroke-width: 10;
-      stroke-linecap: round;
-      /* Animasi transisi saat persentase berubah */
-      transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
-    }
+        .form-group input[readonly] {
+            background-color: #f1f2f6;
+            color: #718093;
+            cursor: not-allowed;
+            border-color: #dcdde1;
+        }
 
-    /* Text Persentase di Tengah Lingkaran */
-    .circle-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #222;
-    }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #0d2040, #16366b);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(13, 32, 64, 0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    /* Keterangan Angka Riwayat di Bawah */
-    .stat-desc {
-      font-size: 0.9rem;
-      color: #666;
-      font-weight: 500;
-    }
-  </style>
+        .btn-login:hover:not(:disabled) {
+            background: linear-gradient(to right, #d61c22, #b51217);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(214, 28, 34, 0.3);
+        }
+
+        .btn-login:disabled, .btn-submit:disabled {
+            background: #b2bec3 !important;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #main-application {
+            display: none;
+        }
+
+        .navbar {
+            background-color: #0d2040;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            height: 80px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            padding: 2px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-title {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #ffeaa7;
+            font-size: 11.5px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            height: 100%;
+        }
+
+        .nav-links li {
+            height: 100%;
+        }
+
+        .nav-links a {
+            color: #dcdde1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .nav-links a.active {
+            color: #ffffff;
+            font-weight: 600;
+            background-color: #d61c22;
+        }
+
+        .btn-logout {
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s;
+            border: 1px solid #7f8c8d;
+        }
+
+        .btn-logout:hover {
+            background-color: #d61c22;
+            border-color: #d61c22;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 30px auto;
+            padding: 0 24px;
+            flex: 1;
+        }
+
+        .content-section {
+            display: none;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e1e8ed;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        h2 {
+            color: #0d2040;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .section-desc {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+
+        .welcome-box {
+            background: linear-gradient(to right, #ffffff, #fdfdfd);
+            border-left: 5px solid #d61c22;
+            padding: 20px 25px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            margin-bottom: 30px;
+        }
+
+        .welcome-box h1 {
+            color: #0d2040;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        
+        .welcome-box span {
+            color: #d61c22;
+        }
+
+        /* --- STYLE BARU DASBOR PROGRESS BAR --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .progress-card {
+            background: #ffffff;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-card h3 {
+            font-size: 15px;
+            color: #0d2040;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .progress-card p {
+            font-size: 12.5px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 140px;
+            height: 140px;
+        }
+
+        .circular-progress svg {
+            width: 140px;
+            height: 140px;
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        .circular-progress .bg-circle {
+            stroke: #f1f2f6;
+        }
+
+        .circular-progress .progress-circle {
+            stroke: #d61c22;
+            stroke-dasharray: 377; /* Keliling lingkaran 2 * pi * r (r=60) */
+            stroke-dashoffset: 377;
+            transition: stroke-dashoffset 0.8s ease-in-out;
+        }
+
+        /* Variasi warna sirkular ketiga */
+        .progress-card:nth-child(3) .progress-circle {
+            stroke: #27ae60;
+        }
+
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-percentage {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1e272e;
+        }
+
+        .progress-fraction {
+            font-size: 11px;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .navbar { flex-direction: column; height: auto; padding: 15px; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; height: auto; gap: 5px; }
+            .nav-links a { padding: 8px 12px; border-radius: 4px; }
+            .nav-links a.active { background-color: #d61c22; }
+            .login-wrapper { flex-direction: column; justify-content: center; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .container { margin: 15px auto; padding: 0 12px; }
+            .content-section { padding: 20px; }
+        }
+
+        .btn-submit {
+            background-color: #d61c22;
+            color: white;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(214, 28, 34, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background-color: #b51217;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(214, 28, 34, 0.3);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 35px;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .table-responsive h3 {
+            padding: 18px 20px 5px 20px;
+            color: #0d2040;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .table-info-text {
+            font-size: 13px; 
+            color: #7f8c8d; 
+            padding: 0 20px 15px 20px;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #0d2040;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 20px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+
+        td {
+            padding: 14px 20px;
+            font-size: 13.5px;
+            color: #2c3e50;
+            border-bottom: 1px solid #f1f2f6;
+            line-height: 1.4;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tbody tr:nth-child(even) { background-color: #fafbfc; }
+        tbody tr:hover { background-color: #f1f2f6; }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-open { background-color: #ffeaa7; color: #d63031; }
+        .badge-progress { background-color: #dff9fb; color: #0984e3; }
+        .badge-closed { background-color: #e2f7ce; color: #27ae60; }
+        .badge-bd-schedule { background-color: #ffcccc; color: #c0392b; }
+        .badge-bd-unschedule { background-color: #d4efdf; color: #27ae60; }
+    </style>
 </head>
 <body>
 
-  <!-- Bagian Header Selamat Datang -->
-  <div class="welcome-section">
-    <h2>Selamat Datang di Beranda</h2>
-    <p>Pantau pencapaian target DAR dan TAR Anda bulan ini secara real-time.</p>
-  </div>
-
-  <!-- Kontainer Utama Visualisasi Lingkaran Pencapaian -->
-  <div class="dashboard-container">
-    
-    <!-- Kartu 1: DAR Daily -->
-    <div class="stat-card">
-      <h4>DAR Harian</h4>
-      <div class="progress-circle-wrapper">
-        <svg width="120" height="120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
-          <circle id="circle-dar-daily" class="circle-progress" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-        </svg>
-        <div id="text-dar-daily" class="circle-text">0%</div>
-      </div>
-      <div id="desc-dar-daily" class="stat-desc">0 / 10 Jam</div>
+    <div id="login-page" class="login-wrapper">
+        <div class="login-card">
+            <img class="login-logo" src="<?= getLogoUrl(); ?>" alt="Logo Portal">
+            <h2>PPD Web Portal</h2>
+            <p>Plant People Development - PPA Site ADW</p>
+            <div id="login-form-container">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan ID atau username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan sandi keamanan">
+                </div>
+                <button type="button" class="btn-login" onclick="handleLogin()">Masuk Portal</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Kartu 2: DAR Monthly -->
-    <div class="stat-card">
-      <h4>DAR Bulanan</h4>
-      <div class="progress-circle-wrapper">
-        <svg width="120" height="120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
-          <circle id="circle-dar-monthly" class="circle-progress" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-        </svg>
-        <div id="text-dar-monthly" class="circle-text">0%</div>
-      </div>
-      <div id="desc-dar-monthly" class="stat-desc">0 / 0 Jam</div>
+    <div id="main-application">
+        <nav class="navbar">
+            <div class="brand-container">
+                <img class="brand-logo" alt="Logo PPD" src="<?= getLogoUrl(); ?>" />
+                <div class="brand-text">
+                    <span class="brand-title">Plant People Development</span>
+                    <span class="brand-subtitle">PPA Site ADW</span>
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#" id="nav-beranda" onclick="switchSection('beranda', this)" class="active">Beranda</a></li>
+                <li><a href="#" onclick="switchSection('daily-activity', this)">Daily Activity</a></li>
+                <li><a href="#" onclick="switchSection('technical-analysis', this)">Technical Analysis</a></li>
+                <li><a href="#" onclick="switchSection('mentoring', this)">Mentoring</a></li>
+                <li><a href="#" onclick="switchSection('training', this)">Training</a></li>
+                <li><a href="#" onclick="switchSection('modul', this)">Modul</a></li>
+            </ul>
+            <a href="#" class="btn-logout" onclick="handleLogout(event)">Keluar</a>
+        </nav>
+
+        <div class="container">
+            
+            <div id="sec-beranda" class="content-section active">
+                <div class="welcome-box">
+                    <h1>Selamat Datang, <span id="user-display-name">User</span>!</h1>
+                    <p style="margin-top: 8px; color: #57606f; font-size: 14px;">Koneksi ke basis data cloud terhubung sempurna. Gunakan bar navigasi di bagian atas untuk mulai mencatat aktivitas harian Anda atau mengisi formulir bimbingan.</p>
+                </div>
+
+                <!-- --- IMPLEMENTASI BARU: GRID CIRCULAR PROGRESS BAR --- -->
+                <h2>Pencapaian Target Bulan Ini</h2>
+                <div class="dashboard-grid">
+                    
+                    <!-- 1. DAR Daily -->
+                    <div class="progress-card">
+                        <h3>DAR - Daily Progress</h3>
+                        <p>Target Maksimal: 10 Jam / Hari</p>
+                        <div class="circular-progress">
+                            <svg>
+                                <circle class="bg-circle" cx="70" cy="70" r="60"></circle>
+                                <circle id="circle-dar-daily" class="progress-circle" cx="70" cy="70" r="60"></circle>
+                            </svg>
+                            <div class="welcome-boxspan progress-value">
+                                <span id="text-dar-daily-pct" class="progress-percentage">0%</span>
+                                <span id="text-dar-daily-fraction" class="progress-fraction">0 / 10 Jam</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. DAR Monthly -->
+                    <div class="progress-card">
+                        <h3>DAR - Monthly Progress</h3>
+                        <p>Target: 10 Jam &times; Jumlah Hari</p>
+                        <div class="circular-progress">
+                            <svg>
+                                <circle class="bg-circle" cx="70" cy="70" r="60"></circle>
+                                <circle id="circle-dar-monthly" class="progress-circle" cx="70" cy="70" r="60"></circle>
+                            </svg>
+                            <div class="progress-value">
+                                <span id="text-dar-monthly-pct" class="progress-percentage">0%</span>
+                                <span id="text-dar-monthly-fraction" class="progress-fraction">0 / 0 Jam</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. TAR Monthly -->
+                    <div class="progress-card">
+                        <h3>TAR - Monthly Progress</h3>
+                        <p>Target: Minimal 2 Laporan / Bulan</p>
+                        <div class="circular-progress">
+                            <svg>
+                                <circle class="bg-circle" cx="70" cy="70" r="60"></circle>
+                                <circle id="circle-tar-monthly" class="progress-circle" cx="70" cy="70" r="60"></circle>
+                            </svg>
+                            <div class="progress-value">
+                                <span id="text-tar-monthly-pct" class="progress-percentage">0%</span>
+                                <span id="text-tar-monthly-fraction" class="progress-fraction">0 / 2 TAR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="sec-daily-activity" class="content-section">
+                <h2>Form Daily Activity Report (DAR)</h2>
+                <p class="section-desc">Pencatatan laporan kegiatan harian siswa FMDP.</p>
+                
+                <form onsubmit="saveActivity(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Karyawan</label>
+                            <input type="text" id="act-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>NRP / ID</label>
+                            <input type="text" id="act-nrp" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Pekerjaan</label>
+                            <input type="date" id="act-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Waktu Pekerjaan</label>
+                            <div class="time-grid">
+                                <input type="time" id="act-waktu-mulai" required>
+                                <input type="time" id="act-waktu-selesai" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Lambung Unit (CN)</label>
+                            <input type="text" id="act-unit" placeholder="Isikan kode unit atau 'Non-Unit'" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Durasi Pekerjaan (Menit)</label>
+                            <input type="number" id="act-durasi" placeholder="Misal: 60, 120" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Rincian Aktivitas (Activity)</label>
+                        <textarea id="act-activity" rows="3" placeholder="Tuliskan rincian tugas harian..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan Tambahan (Opsional)</label>
+                        <textarea id="act-keterangan" rows="2" placeholder="Catatan lapangan tambahan..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Simpan Aktivitas</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Daftar Riwayat Aktivitas Anda</h3>
+                    <p class="table-info-text">Menampilkan laporan aktivitas terdaftar pada database</p>
+                    <table id="activity-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th><th>NRP</th><th>Tanggal</th><th>Jam Mulai</th><th>Jam Selesai</th><th>Unit CN</th><th>Activity</th><th>Durasi</th><th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="9" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat aktivitas yang dimuat.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-technical-analysis" class="content-section">
+                <h2>Form Technical Analysis Report (TAR)</h2>
+                <p class="section-desc">Pencatatan laporan analisis kerusakan komponen dan riwayat perbaikan unit.</p>
+                
+                <form onsubmit="saveTechnicalAnalysis(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Karyawan</label>
+                            <input type="text" id="ta-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>NRP / ID</label>
+                            <input type="text" id="ta-nrp" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Pekerjaan</label>
+                            <input type="date" id="ta-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Lambung Unit (CN)</label>
+                            <input type="text" id="ta-unit" placeholder="Contoh: CN201" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Jenis Breakdown</label>
+                            <select id="ta-jenis-breakdown" required>
+                                <option value="" disabled selected>-- Pilih Jenis --</option>
+                                <option value="Schedule">Schedule Breakdown</option>
+                                <option value="Unschedule">Unschedule Breakdown</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sistem / Komponen Utama</label>
+                            <input type="text" id="ta-komponen" placeholder="Contoh: Engine, Hydraulic" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Perbaikan Unit</label>
+                            <select id="ta-status" required>
+                                <option value="" disabled selected>-- Pilih Status Unit --</option>
+                                <option value="Open">Open (Pending)</option>
+                                <option value="On Progress">On Progress</option>
+                                <option value="Closed">Closed (RFU)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lampirkan Foto Kondisi</label>
+                            <input type="file" id="ta-file" accept="image/*" required style="padding: 8px;">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Nama Pengawas Lapangan</label>
+                            <input type="text" id="ta-pengawas" placeholder="Masukkan nama pengawas" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gejala Fisik / Masalah Awal (Symptom)</label>
+                        <textarea id="ta-symptom" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Analisa Akar Masalah (Root Cause Analysis)</label>
+                        <textarea id="ta-rootcause" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tindakan Korektif (Perbaikan)</label>
+                        <textarea id="ta-perbaikan" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Rekomendasi / Langkah Pencegahan</label>
+                        <textarea id="ta-pencegahan" rows="2" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Simpan Laporan Teknis</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Riwayat Laporan Analisa Teknik Anda</h3>
+                    <p class="table-info-text">Daftar arsip penanganan kerusakan unit</p>
+                    <table id="ta-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Analyst</th><th>NRP</th><th>Tanggal Analisis</th><th>Unit CN</th><th>Jenis Breakdown</th><th>Komponen</th><th>Gejala Masalah</th><th>Analisa Kerusakan</th><th>Perbaikan</th><th>Rekomendasi Pencegahan</th><th>Status</th><th>Lampiran Foto</th><th>Nama Pengawas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="13" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat analisis data.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-mentoring" class="content-section">
+                <h2>Form Mentoring Portal</h2>
+                <p class="section-desc">Modul bimbingan intensif dan evaluasi kompetensi internal karyawan.</p>
+                
+                <form onsubmit="saveMentoring(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Karyawan</label>
+                            <input type="text" id="men-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>NRP / ID</label>
+                            <input type="text" id="men-nrp" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Bimbingan</label>
+                            <input type="date" id="men-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Instruktur / Mentor</label>
+                            <input type="text" id="men-instruktur" placeholder="Nama Instruktur PPD" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Materi / Topik Utama</label>
+                            <input type="text" id="men-topik" placeholder="Topik bimbingan" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nilai / Target Kelulusan (%)</label>
+                            <input type="number" id="men-nilai" placeholder="Contoh: 85" min="0" max="100" required>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Upload Dokumentasi / Catatan</label>
+                            <input type="file" id="men-file" accept=".pdf,.jpg,.jpeg,.png,.docx" style="padding: 8px;">
+                            <small style="color:#7f8c8d; font-size:11px; display:block; margin-top:4px;">Format: PDF, Gambar, atau Word</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Detail Pembahasan Mentoring</label>
+                        <textarea id="men-pembahasan" rows="3" placeholder="Poin penting bimbingan..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Simpan Data Mentoring</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Riwayat Evaluasi Mentoring Anda</h3>
+                    <p class="table-info-text">Daftar rekam bimbingan internal</p>
+                    <table id="mentoring-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Instruktur / Mentor</th><th>Materi / Topik</th><th>Detail Pembahasan</th><th>Nilai / Target</th><th>Dokumentasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="8" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada riwayat bimbingan.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-training" class="content-section">
+                <h2>Form Training Portal</h2>
+                <p class="section-desc">Pencatatan perkembangan harian agenda training karyawan.</p>
+                
+                <form onsubmit="saveTraining(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Karyawan</label>
+                            <input type="text" id="trn-nama" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>NRP / ID</label>
+                            <input type="text" id="trn-nrp" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Training</label>
+                            <input type="date" id="trn-tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Pelatihan / Training</label>
+                            <input type="text" id="trn-nama-pelatihan" placeholder="Contoh: Basic Mechanic Course" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hari Ke-</label>
+                            <input type="number" id="trn-hari-ke" placeholder="Contoh: 1, 2, 3" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dokumentasi Catatan</label>
+                            <input type="file" id="trn-file" accept=".pdf,.jpg,.jpeg,.png,.docx" style="padding: 8px;">
+                            <small style="color:#7f8c8d; font-size:11px; display:block; margin-top:4px;">Format berkas: Gambar, PDF, Word</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Topik Pembahasan</label>
+                        <textarea id="trn-topik" rows="3" placeholder="Tuliskan materi/topik pembahasan training pada hari ini..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Simpan Laporan Training</button>
+                </form>
+
+                <div class="table-responsive">
+                    <h3>Riwayat Log Pelatihan Training</h3>
+                    <p class="table-info-text">Daftar laporan harian training karyawan</p>
+                    <table id="training-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th><th>Nama Karyawan</th><th>NRP</th><th>Nama Pelatihan</th><th>Hari Ke</th><th>Topik Pembahasan</th><th>Dokumentasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="7" style="text-align: center; color: #a4b0be; padding: 30px;">Belum ada data pelatihan terdaftar.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sec-modul" class="content-section">
+                <h2>Modul Center</h2>
+                <p class="section-desc">Pustaka unduhan dokumen PDF petunjuk perawatan unit (Shop Manual / OMM).</p>
+                <p style="color:#7f8c8d;">Berkas dokumentasi sedang diunggah ke server cloud.</p>
+            </div>
+
+        </div>
     </div>
 
-    <!-- Kartu 3: TAR Monthly -->
-    <div class="stat-card">
-      <h4>TAR Bulanan</h4>
-      <div class="progress-circle-wrapper">
-        <svg width="120" height="120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
-          <circle id="circle-ta-monthly" class="circle-progress" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-        </svg>
-        <div id="text-ta-monthly" class="circle-text">0%</div>
-      </div>
-      <div id="desc-ta-monthly" class="stat-desc">0 / 2 Doc</div>
-    </div>
+    <script>
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
+        let globalNrp = "";
 
-  </div>
+        function handleLogin() {
+            const userInp = document.getElementById('username').value;
+            const passInp = document.getElementById('password').value;
 
-  <!-- Logika Integrasi Data JavaScript -->
-  <script>
-    // URL Web App Google Apps Script milik Anda
-    const URL_WEB_APPS = "https://script.google.com/macros/s/AKfycbw3O3e35rLjXQKZaHtW_X0ZS33_YyWo6iG1ootr5BkpHBScAip70_c8zkvDnCwOmMGO/exec";
+            if(!userInp || !passInp) {
+                alert("Username dan Password wajib diisi!");
+                return;
+            }
 
-    // Otomatis mengambil data ketika halaman dimuat
-    window.addEventListener("DOMContentLoaded", function() {
-      // Mengambil NRP dari localStorage (sesuai dengan sistem login yang Anda miliki)
-      let activeNrp = localStorage.getItem("userNrp"); 
-      
-      // Jika di aplikasi Anda data NRP disimpan dengan nama variabel lain, silakan sesuaikan line di atas.
-      // Sebagai fallback cadangan jika localStorage kosong/belum login:
-      if (!activeNrp) {
-         activeNrp = "12345678"; // Masukkan NRP testing jika diperlukan
-      }
+            const btnLogin = document.querySelector('.btn-login');
+            btnLogin.innerText = "Memverifikasi Otoritas Portal...";
+            btnLogin.disabled = true;
 
-      if (activeNrp) {
-        loadDashboardStats(activeNrp);
-      }
-    });
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "login", username: userInp, password: passInp })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    globalNrp = data.nrp;
+                    
+                    document.getElementById('user-display-name').innerText = data.nama;
+                    
+                    document.getElementById('act-nama').value = data.nama;
+                    document.getElementById('act-nrp').value = data.nrp;
+                    
+                    document.getElementById('ta-nama').value = data.nama;
+                    document.getElementById('ta-nrp').value = data.nrp;
 
-    /**
-     * Mengambil data statistik pencapaian langsung dari Google Spreadsheet via GAS
-     */
-    function loadDashboardStats(userNrp) {
-      fetch(URL_WEB_APPS, {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify({ action: "getDashboardStats", nrp: userNrp })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === "success") {
-          // Update masing-masing ring lingkaran secara dinamis
-          updateProgressCircle("dar-daily", data.stats.darDaily, "Jam");
-          updateProgressCircle("dar-monthly", data.stats.darMonthly, "Jam");
-          updateProgressCircle("ta-monthly", data.stats.taMonthly, "Doc");
-        } else {
-          console.error("Gagal mengambil data dari server:", data.error);
+                    document.getElementById('men-nama').value = data.nama;
+                    document.getElementById('men-nrp').value = data.nrp;
+
+                    document.getElementById('trn-nama').value = data.nama;
+                    document.getElementById('trn-nrp').value = data.nrp;
+
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('main-application').style.display = 'block';
+
+                    const firstNav = document.getElementById('nav-beranda');
+                    switchSection('beranda', firstNav);
+
+                    // Ambil data untuk diagram lingkaran di beranda
+                    updateDashboardBars(data.nrp);
+
+                    loadActivityHistory(data.nrp);
+                    loadTAHistory(data.nrp);
+                    loadMentoringHistory(data.nrp);
+                    loadTrainingHistory(data.nrp);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Gagal terhubung ke basis data server.");
+            })
+            .finally(() => {
+                btnLogin.innerText = "Masuk Portal";
+                btnLogin.disabled = false;
+            });
         }
-      })
-      .catch(err => console.error("Gagal memuat statistik dashboard:", err));
-    }
 
-    /**
-     * Memperbarui visualisasi ring SVG dan teks di dalam kartu berdasarkan persentase data
-     */
-    function updateProgressCircle(id, stat, unit) {
-      var circle = document.getElementById("circle-" + id);
-      var text = document.getElementById("text-" + id);
-      var desc = document.getElementById("desc-" + id);
-      
-      if (!circle || !text || !desc) return;
-      
-      // Keliling lingkaran r=50 adalah 2 * Math.PI * 50 = 314.16
-      const strokeDasharray = 314.16;
-      
-      // Hitung sisa offset stroke SVG untuk simulasi progress bar
-      var offset = strokeDasharray - (stat.percent / 100) * strokeDasharray;
-      circle.style.strokeDashoffset = offset;
-      
-      // Logika tampilan indikator visual (Meniru behavior pola image_dc3132.png)
-      if (stat.percent >= 100) {
-        text.innerHTML = "&#10003;"; // Karakter simbol centang murni (✓) jika beres 100%
-        text.style.color = "#28a745";
-        circle.style.stroke = "#28a745"; // Hijau Tua Sukses
-      } else {
-        text.innerText = stat.percent + "%";
-        text.style.color = "#222";
-        
-        // Pembagian warna gradasi lingkaran berdasarkan pencapaian % berjalan
-        if (stat.percent <= 30) {
-          circle.style.stroke = "#dc3545"; // Merah (Kritis)
-        } else if (stat.percent <= 60) {
-          circle.style.stroke = "#ffc107"; // Kuning/Jingga (Sedang)
-        } else {
-          circle.style.stroke = "#2baf4a"; // Hijau Muda (Mendekati target)
+        /* --- FUNGSI BARU: AMBIL DATA DAN UPDATE ANIMASI CIRCULAR PROGRESS --- */
+        function updateDashboardBars(nrpUser) {
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getDashboardData", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    const totalCircleLength = 377; // Sesuai stroke-dasharray
+
+                    // 1. DAR Daily
+                    let darDailyHours = parseFloat(data.darDailyHours) || 0;
+                    if(darDailyHours > 10) darDailyHours = 10; // Batasi visual maksimal 10 jam
+                    const dailyPct = Math.round((darDailyHours / 10) * 100);
+                    const dailyOffset = totalCircleLength - (totalCircleLength * (dailyPct / 100));
+                    document.getElementById('circle-dar-daily').style.strokeDashoffset = dailyOffset;
+                    document.getElementById('text-dar-daily-pct').innerText = dailyPct + "%";
+                    document.getElementById('text-dar-daily-fraction').innerText = darDailyHours.toFixed(1) + " / 10 Jam";
+
+                    // 2. DAR Monthly
+                    const darMonthlyHours = parseFloat(data.darMonthlyHours) || 0;
+                    const maxMonthlyHours = parseFloat(data.maxMonthlyHours) || 300;
+                    let monthlyPct = Math.round((darMonthlyHours / maxMonthlyHours) * 100);
+                    if(monthlyPct > 100) monthlyPct = 100;
+                    const monthlyOffset = totalCircleLength - (totalCircleLength * (monthlyPct / 100));
+                    document.getElementById('circle-dar-monthly').style.strokeDashoffset = monthlyOffset;
+                    document.getElementById('text-dar-monthly-pct').innerText = monthlyPct + "%";
+                    document.getElementById('text-dar-monthly-fraction').innerText = darMonthlyHours.toFixed(1) + " / " + maxMonthlyHours + " Jam";
+
+                    // 3. TAR Monthly
+                    const tarCount = parseInt(data.tarMonthlyCount) || 0;
+                    let tarPct = Math.round((tarCount / 2) * 100);
+                    if(tarPct > 100) tarPct = 100;
+                    const tarOffset = totalCircleLength - (totalCircleLength * (tarPct / 100));
+                    document.getElementById('circle-tar-monthly').style.strokeDashoffset = tarOffset;
+                    document.getElementById('text-tar-monthly-pct').innerText = tarPct + "%";
+                    document.getElementById('text-tar-monthly-fraction').innerText = tarCount + " / 2 TAR";
+                }
+            })
+            .catch(err => console.error("Gagal memperbarui diagram beranda:", err));
         }
-      }
-      
-      // Update tulisan angka pencapaian murni di bawah lingkaran (cth: "5 / 10 Jam")
-      desc.innerText = stat.current + " / " + stat.target + " " + unit;
-    }
-  </script>
+
+        function loadActivityHistory(nrpUser) {
+            const tableBody = document.querySelector('#activity-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mingguan...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td><strong>${item.waktuMulai}</strong></td><td><strong>${item.waktuSelesai}</strong></td><td>${item.unit}</td><td>${item.activity}</td><td>${item.durasi}</td><td>${item.keterangan}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas terdaftar.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat lembar DAR.</td></tr>`;
+            });
+        }
+
+        function saveActivity(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengamankan Data..."; btnSubmit.disabled = true;
+
+            const formData = {
+                action: "activity",
+                nama: document.getElementById('act-nama').value,
+                nrp: document.getElementById('act-nrp').value,
+                tanggal: document.getElementById('act-tanggal').value,
+                waktuMulai: document.getElementById('act-waktu-mulai').value,
+                waktuSelesai: document.getElementById('act-waktu-selesai').value,
+                unit: document.getElementById('act-unit').value,
+                activity: document.getElementById('act-activity').value,
+                durasi: document.getElementById('act-durasi').value + " Menit",
+                keterangan: document.getElementById('act-keterangan').value || "-"
+            };
+
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(formData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Aktivitas harian tersimpan!");
+                    loadActivityHistory(formData.nrp);
+                    updateDashboardBars(formData.nrp); // Segera perbarui diagram lingkaran
+                    event.target.reset();
+                    document.getElementById('act-nama').value = formData.nama;
+                    document.getElementById('act-nrp').value = formData.nrp;
+                } else { alert("Error: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengirim data."))
+            .finally(() => { btnSubmit.innerText = "Simpan Aktivitas"; btnSubmit.disabled = false; });
+        }
+
+        function loadTAHistory(nrpUser) {
+            const tableBody = document.querySelector('#ta-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #7f8c8d; padding: 25px;">Memuat monitoring komplain...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTAHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let statusClass = "badge-open";
+                        if(item.status === "On Progress") statusClass = "badge-progress";
+                        if(item.status === "Closed") statusClass = "badge-closed";
+
+                        let bdClass = (item.jenisBreakdown && item.jenisBreakdown.toLowerCase().includes("unschedule")) ? "badge-bd-unschedule" : "badge-bd-schedule";
+                        let linkHtml = (item.linkLampiran && item.linkLampiran !== "-") ? `<a href="${item.linkLampiran}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Foto 👁</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.nama}</td><td>${item.nrp}</td><td>${item.tanggal}</td><td><strong>${item.unit}</strong></td>
+                            <td><span class="badge ${bdClass}">${item.jenisBreakdown}</span></td>
+                            <td>${item.komponen}</td><td>${item.symptom}</td><td>${item.rootCause}</td>
+                            <td>${item.perbaikan}</td><td>${item.pencegahan}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td><td>${linkHtml}</td><td><em>${item.namaPengawas}</em></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada berkas formulir analisis teknis.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: #ea2027; padding: 25px;">Gagal sinkronisasi tabel TAR.</td></tr>`;
+            });
+        }
+
+        function saveTechnicalAnalysis(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengunggah Laporan..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('ta-file');
+            const file = fileInput.files[0];
+
+            const taData = {
+                action: "saveTA",
+                nama: document.getElementById('ta-nama').value,
+                nrp: document.getElementById('ta-nrp').value,
+                tanggal: document.getElementById('ta-tanggal').value,
+                unit: document.getElementById('ta-unit').value,
+                jenisBreakdown: document.getElementById('ta-jenis-breakdown').value,
+                komponen: document.getElementById('ta-komponen').value,
+                status: document.getElementById('ta-status').value,
+                symptom: document.getElementById('ta-symptom').value,
+                rootCause: document.getElementById('ta-rootcause').value,
+                perbaikan: document.getElementById('ta-perbaikan').value,
+                pencegahan: document.getElementById('ta-pencegahan').value,
+                namaPengawas: document.getElementById('ta-pengawas').value,
+                fileData: "", fileName: "", fileType: ""
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    taData.fileData = e.target.result;
+                    taData.fileName = `${taData.unit}_TAR_${Date.now()}_${file.name}`;
+                    taData.fileType = file.type;
+                    kirimDataTA(taData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTA(taData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataTA(taData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(taData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Dokumen TAR & lampiran foto terunggah!");
+                    loadTAHistory(taData.nrp);
+                    updateDashboardBars(taData.nrp); // Segera perbarui diagram lingkaran
+                    formElement.reset();
+                    document.getElementById('ta-nama').value = taData.nama;
+                    document.getElementById('ta-nrp').value = taData.nrp;
+                } else { alert("Gagal: " + data.error); }
+            })
+            .catch(error => alert("Gagal mengunggah laporan teknis."))
+            .finally(() => { btnSubmit.innerText = "Simpan Laporan Teknis"; btnSubmit.disabled = false; });
+        }
+
+        function loadMentoringHistory(nrpUser) {
+            const tableBody = document.querySelector('#mentoring-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat riwayat mentoring...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getMentoringHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let linkDocHtml = (item.linkDokumen && item.linkDokumen !== "-") ? `<a href="${item.linkDokumen}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Catatan 👁</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td>${item.instruktur}</td><td>${item.topik}</td><td>${item.pembahasan}</td><td><strong>${item.nilai}%</strong></td><td>${linkDocHtml}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat bimbingan mentoring.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat tabel mentoring.</td></tr>`;
+            });
+        }
+
+        function saveMentoring(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Menyimpan Data Bimbingan..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('men-file');
+            const file = fileInput.files[0];
+
+            const mentoringData = {
+                action: "saveMentoring",
+                nama: document.getElementById('men-nama').value,
+                nrp: document.getElementById('men-nrp').value,
+                tanggal: document.getElementById('men-tanggal').value,
+                instruktur: document.getElementById('men-instruktur').value,
+                topik: document.getElementById('men-topik').value,
+                nilai: document.getElementById('men-nilai').value,
+                pembahasan: document.getElementById('men-pembahasan').value,
+                fileData: "", fileName: "", fileType: ""
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mentoringData.fileData = e.target.result;
+                    mentoringData.fileName = `${mentoringData.nrp}_MENTORING_${Date.now()}_${file.name}`;
+                    mentoringData.fileType = file.type;
+                    kirimDataMentoring(mentoringData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataMentoring(mentoringData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataMentoring(mentoringData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(mentoringData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Data mentoring & lampiran berkas berhasil disimpan!");
+                    loadMentoringHistory(mentoringData.nrp);
+                    formElement.reset();
+                    document.getElementById('men-nama').value = mentoringData.nama;
+                    document.getElementById('men-nrp').value = mentoringData.nrp;
+                } else { alert("Gagal: " + data.error); }
+            })
+            .catch(error => alert("Koneksi gagal saat menyimpan data mentoring."))
+            .finally(() => { btnSubmit.innerText = "Simpan Data Mentoring"; btnSubmit.disabled = false; });
+        }
+
+        function loadTrainingHistory(nrpUser) {
+            const tableBody = document.querySelector('#training-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 20px;">Memuat berkas training harian...</td></tr>`;
+
+            fetch(scriptUrl, {
+                method: "POST",
+                body: JSON.stringify({ action: "getTrainingHistory", nrp: nrpUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = "";
+                if (data.result === "success" && data.history.length > 0) {
+                    data.history.forEach(item => {
+                        let linkDocHtml = (item.linkDokumen && item.linkDokumen !== "-") ? `<a href="${item.linkDokumen}" target="_blank" style="color:#0d2040; font-weight:600;">Lihat Catatan 👁</a>` : "<span style='color:#a4b0be;'>Tidak ada</span>";
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.tanggal}</td><td>${item.nama}</td><td>${item.nrp}</td><td><strong>${item.namaTraining}</strong></td><td>Hari ke-${item.hariKe}</td><td>${item.topik}</td><td>${linkDocHtml}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d; padding: 25px;">Belum ada riwayat aktivitas training harian.</td></tr>`;
+                }
+            })
+            .catch(error => {
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat lembar monitoring training.</td></tr>`;
+            });
+        }
+
+        function saveTraining(event) {
+            event.preventDefault();
+            const btnSubmit = event.target.querySelector('.btn-submit');
+            btnSubmit.innerText = "Mengamankan Berkas Lapangan..."; btnSubmit.disabled = true;
+
+            const fileInput = document.getElementById('trn-file');
+            const file = fileInput.files[0];
+
+            const trainingData = {
+                action: "saveTraining",
+                nama: document.getElementById('trn-nama').value,
+                nrp: document.getElementById('trn-nrp').value,
+                tanggal: document.getElementById('trn-tanggal').value,
+                namaTraining: document.getElementById('trn-nama-pelatihan').value,
+                hariKe: document.getElementById('trn-hari-ke').value,
+                topik: document.getElementById('trn-topik').value,
+                fileData: "", fileName: "", fileType: ""
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    trainingData.fileData = e.target.result;
+                    trainingData.fileName = `${trainingData.nrp}_TRAINING_HARI_${trainingData.hariKe}_${Date.now()}_${file.name}`;
+                    trainingData.fileType = file.type;
+                    kirimDataTraining(trainingData, event.target, btnSubmit);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                kirimDataTraining(trainingData, event.target, btnSubmit);
+            }
+        }
+
+        function kirimDataTraining(trainingData, formElement, btnSubmit) {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify(trainingData) })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success") {
+                    alert("Sukses: Data harian log training berhasil ditambahkan ke database cloud!");
+                    loadTrainingHistory(trainingData.nrp);
+                    formElement.reset();
+                    document.getElementById('trn-nama').value = trainingData.nama;
+                    document.getElementById('trn-nrp').value = trainingData.nrp;
+                } else { alert("Gagal: " + data.error); }
+            })
+            .catch(error => alert("Koneksi gagal saat menyimpan log data training."))
+            .finally(() => { btnSubmit.innerText = "Simpan Laporan Training"; btnSubmit.disabled = false; });
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            document.getElementById('main-application').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function switchSection(sectionId, element) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('sec-' + sectionId).classList.add('active');
+            if(element) element.classList.add('active');
+
+            // Opsional: Perbarui diagram setiap kali pengguna kembali mengklik menu Beranda
+            if(sectionId === 'beranda' && globalNrp !== "") {
+                updateDashboardBars(globalNrp);
+            }
+        }
+    </script>
 </body>
 </html>
