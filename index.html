@@ -45,17 +45,6 @@
             z-index: 2;
         }
 
-        .login-logo {
-            width: 75px;
-            height: 75px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
         .login-card h2 {
             margin-bottom: 8px;
             color: #0d2040;
@@ -159,16 +148,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .brand-logo {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            padding: 2px;
         }
 
         .brand-text {
@@ -297,7 +276,6 @@
             color: #d61c22;
         }
 
-        /* --- STYLE BARU DASBOR PROGRESS BAR --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -357,12 +335,11 @@
 
         .circular-progress .progress-circle {
             stroke: #d61c22;
-            stroke-dasharray: 377; /* Keliling lingkaran 2 * pi * r (r=60) */
+            stroke-dasharray: 377;
             stroke-dashoffset: 377;
             transition: stroke-dashoffset 0.8s ease-in-out;
         }
 
-        /* Variasi warna sirkular ketiga */
         .progress-card:nth-child(3) .progress-circle {
             stroke: #27ae60;
         }
@@ -501,15 +478,17 @@
         .badge-open { background-color: #ffeaa7; color: #d63031; }
         .badge-progress { background-color: #dff9fb; color: #0984e3; }
         .badge-closed { background-color: #e2f7ce; color: #27ae60; }
-        .badge-bd-schedule { background-color: #ffcccc; color: #c0392b; }
-        .badge-bd-unschedule { background-color: #d4efdf; color: #27ae60; }
+        
+        /* REVISI POINT 6: Menukar warna badge breakdown */
+        .badge-bd-schedule { background-color: #e2f7ce; color: #27ae60; } /* Hijau */
+        .badge-bd-unschedule { background-color: #ffcccc; color: #c0392b; } /* Merah */
     </style>
 </head>
 <body>
 
+    <!-- REVISI POINT 1: Menghapus tag img login-logo dari halaman login -->
     <div id="login-page" class="login-wrapper">
         <div class="login-card">
-            <img class="login-logo" src="<?= getLogoUrl(); ?>" alt="Logo Portal">
             <h2>PPD Web Portal</h2>
             <p>Plant People Development - PPA Site ADW</p>
             <div id="login-form-container">
@@ -529,7 +508,7 @@
     <div id="main-application">
         <nav class="navbar">
             <div class="brand-container">
-                <img class="brand-logo" alt="Logo PPD" src="<?= getLogoUrl(); ?>" />
+                <!-- REVISI POINT 2: Menghapus tag img brand-logo dari navbar setelah login -->
                 <div class="brand-text">
                     <span class="brand-title">Plant People Development</span>
                     <span class="brand-subtitle">PPA Site ADW</span>
@@ -552,14 +531,13 @@
             <div id="sec-beranda" class="content-section active">
                 <div class="welcome-box">
                     <h1>Selamat Datang, <span id="user-display-name">User</span>!</h1>
-                    <p style="margin-top: 8px; color: #57606f; font-size: 14px;">Koneksi ke basis data cloud terhubung sempurna. Gunakan bar navigasi di bagian atas untuk mulai mencatat aktivitas harian Anda atau mengisi formulir bimbingan.</p>
+                    <!-- REVISI POINT 3: Mengubah teks deskripsi sambutan Beranda -->
+                    <p style="margin-top: 8px; color: #57606f; font-size: 14px;">Website ini digunakan untuk mencatat aktivitas harian siswa FMDP Plant selama menjalani program on the job training.</p>
                 </div>
 
-                <!-- --- IMPLEMENTASI BARU: GRID CIRCULAR PROGRESS BAR --- -->
                 <h2>Pencapaian Target Bulan Ini</h2>
                 <div class="dashboard-grid">
                     
-                    <!-- 1. DAR Daily -->
                     <div class="progress-card">
                         <h3>DAR - Daily Progress</h3>
                         <p>Target Maksimal: 10 Jam / Hari</p>
@@ -575,7 +553,6 @@
                         </div>
                     </div>
 
-                    <!-- 2. DAR Monthly -->
                     <div class="progress-card">
                         <h3>DAR - Monthly Progress</h3>
                         <p>Target: 10 Jam &times; Jumlah Hari</p>
@@ -591,7 +568,6 @@
                         </div>
                     </div>
 
-                    <!-- 3. TAR Monthly -->
                     <div class="progress-card">
                         <h3>TAR - Monthly Progress</h3>
                         <p>Target: Minimal 2 Laporan / Bulan</p>
@@ -659,7 +635,8 @@
 
                 <div class="table-responsive">
                     <h3>Daftar Riwayat Aktivitas Anda</h3>
-                    <p class="table-info-text">Menampilkan laporan aktivitas terdaftar pada database</p>
+                    <!-- REVISI POINT 4: Mengubah teks deskripsi di tabel Daily Activity -->
+                    <p class="table-info-text">Menampilkan laporan aktivitas harian dalam minggu ini</p>
                     <table id="activity-table">
                         <thead>
                             <tr>
@@ -748,7 +725,8 @@
 
                 <div class="table-responsive">
                     <h3>Riwayat Laporan Analisa Teknik Anda</h3>
-                    <p class="table-info-text">Daftar arsip penanganan kerusakan unit</p>
+                    <!-- REVISI POINT 5: Mengubah teks deskripsi di tabel Technical Analysis -->
+                    <p class="table-info-text">Menampilkan laporan analisa teknik dalam bulan ini</p>
                     <table id="ta-table">
                         <thead>
                             <tr>
@@ -931,7 +909,6 @@
                     const firstNav = document.getElementById('nav-beranda');
                     switchSection('beranda', firstNav);
 
-                    // Ambil data untuk diagram lingkaran di beranda
                     updateDashboardBars(data.nrp);
 
                     loadActivityHistory(data.nrp);
@@ -952,7 +929,6 @@
             });
         }
 
-        /* --- FUNGSI BARU: AMBIL DATA DAN UPDATE ANIMASI CIRCULAR PROGRESS --- */
         function updateDashboardBars(nrpUser) {
             fetch(scriptUrl, {
                 method: "POST",
@@ -961,18 +937,16 @@
             .then(response => response.json())
             .then(data => {
                 if (data.result === "success") {
-                    const totalCircleLength = 377; // Sesuai stroke-dasharray
+                    const totalCircleLength = 377;
 
-                    // 1. DAR Daily
                     let darDailyHours = parseFloat(data.darDailyHours) || 0;
-                    if(darDailyHours > 10) darDailyHours = 10; // Batasi visual maksimal 10 jam
+                    if(darDailyHours > 10) darDailyHours = 10;
                     const dailyPct = Math.round((darDailyHours / 10) * 100);
                     const dailyOffset = totalCircleLength - (totalCircleLength * (dailyPct / 100));
                     document.getElementById('circle-dar-daily').style.strokeDashoffset = dailyOffset;
                     document.getElementById('text-dar-daily-pct').innerText = dailyPct + "%";
                     document.getElementById('text-dar-daily-fraction').innerText = darDailyHours.toFixed(1) + " / 10 Jam";
 
-                    // 2. DAR Monthly
                     const darMonthlyHours = parseFloat(data.darMonthlyHours) || 0;
                     const maxMonthlyHours = parseFloat(data.maxMonthlyHours) || 300;
                     let monthlyPct = Math.round((darMonthlyHours / maxMonthlyHours) * 100);
@@ -982,7 +956,6 @@
                     document.getElementById('text-dar-monthly-pct').innerText = monthlyPct + "%";
                     document.getElementById('text-dar-monthly-fraction').innerText = darMonthlyHours.toFixed(1) + " / " + maxMonthlyHours + " Jam";
 
-                    // 3. TAR Monthly
                     const tarCount = parseInt(data.tarMonthlyCount) || 0;
                     let tarPct = Math.round((tarCount / 2) * 100);
                     if(tarPct > 100) tarPct = 100;
@@ -1045,7 +1018,7 @@
                 if(data.result === "success") {
                     alert("Sukses: Aktivitas harian tersimpan!");
                     loadActivityHistory(formData.nrp);
-                    updateDashboardBars(formData.nrp); // Segera perbarui diagram lingkaran
+                    updateDashboardBars(formData.nrp);
                     event.target.reset();
                     document.getElementById('act-nama').value = formData.nama;
                     document.getElementById('act-nrp').value = formData.nrp;
@@ -1140,7 +1113,7 @@
                 if(data.result === "success") {
                     alert("Sukses: Dokumen TAR & lampiran foto terunggah!");
                     loadTAHistory(taData.nrp);
-                    updateDashboardBars(taData.nrp); // Segera perbarui diagram lingkaran
+                    updateDashboardBars(taData.nrp);
                     formElement.reset();
                     document.getElementById('ta-nama').value = taData.nama;
                     document.getElementById('ta-nrp').value = taData.nrp;
@@ -1176,6 +1149,10 @@
             .catch(error => {
                 tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #ea2027; padding: 25px;">Gagal memuat tabel mentoring.</td></tr>`;
             });
+        }
+
+        function saveMentoring(metoringData, formElement, btnSubmit) {
+            // (Tetap menggunakan fungsi kirimDataMentoring yang dipanggil dari DOM)
         }
 
         function saveMentoring(event) {
@@ -1322,7 +1299,6 @@
             document.getElementById('sec-' + sectionId).classList.add('active');
             if(element) element.classList.add('active');
 
-            // Opsional: Perbarui diagram setiap kali pengguna kembali mengklik menu Beranda
             if(sectionId === 'beranda' && globalNrp !== "") {
                 updateDashboardBars(globalNrp);
             }
